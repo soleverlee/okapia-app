@@ -11,15 +11,15 @@ if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
+//def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+//if (flutterVersionCode == null) {
+//    flutterVersionCode = '1'
+//}
+//
+//def flutterVersionName = localProperties.getProperty('flutter.versionName')
+//if (flutterVersionName == null) {
+//    flutterVersionName = '1.0'
+//}
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -41,10 +41,27 @@ android {
         applicationId "com.thoughtworks.okapia_app"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 1
+        versionName 0.1
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        dev {
+            dimension "app"
+            applicationIdSuffix = ".dev"
+        }
+        qa {
+            dimension "app"
+            applicationIdSuffix = ".qa"
+        }
+        prod {
+            dimension "app"
+        }
+    }
+
 
     buildTypes {
         release {
@@ -53,6 +70,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
 }
 
 flutter {

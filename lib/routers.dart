@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:okapia_app/developer/dev_count.dart';
+import 'package:okapia_app/developer/movie/dev_movie_page.dart';
 import 'package:okapia_app/pages/home.dart';
 
 class Routers {
@@ -14,6 +15,6 @@ class Routers {
   static void jumpToDevPage(BuildContext context) =>
       Navigator.of(context).pushNamed("/develop");
 
-  static void jumpToDevPageWithParam(BuildContext context, int count)=>
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DevelopApp()));
+  static void jumpToDevMoviePage(BuildContext context)=>
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DevMoviePageContainer()));
 }

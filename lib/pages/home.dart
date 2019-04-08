@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/developer/dev_count.dart';
-import 'package:okapia_app/developer/dev_empty.dart';
+import 'package:okapia_app/developer/dev_pages.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _HomeExPageState extends State<HomePage> {
   var _pages = [
     DevEmpty(),
     DevEmpty(),
-    DevEmpty(),
+    DevPages(),
     DevCountPage(title: "test")
   ];
 

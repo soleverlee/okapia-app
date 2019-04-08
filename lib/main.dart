@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/base/app_bloc.dart';
-import 'package:okapia_app/base/bloc_base.dart';
+import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/routers.dart';
 
 void main() => runApp(MainApp());

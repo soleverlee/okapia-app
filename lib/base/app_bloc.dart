@@ -1,17 +1,17 @@
-import 'package:okapia_app/base/bloc_base.dart';
+import 'package:okapia_app/base/base_bloc.dart';
 
 
 /// 存放一些全局存储的数据
 
-class AppBloc implements BlocBase {
+class AppBloc implements BaseBloc {
 
-  List<BlocBase> blocs = [];
+  List<BaseBloc> blocs = [];
 
   AppBloc(){
     /// 初始化工作
   }
 
-  T find<T extends BlocBase>() {
+  T find<T extends BaseBloc>() {
     return blocs.firstWhere((it)=>it is T);
   }
 

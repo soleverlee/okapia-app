@@ -1,9 +1,9 @@
 import 'package:okapia_app/common/log_utils.dart';
 import 'package:package_info/package_info.dart';
 
-const PKG_NAME_DEV = "com.obowin.sports.dev";
-const PKG_NAME_QA = "com.obowin.sports.qa";
-const PKG_NAME_PROD = "com.obowin.sports";
+const PKG_NAME_DEV = "com.thoughtworks.okapia_app.dev";
+const PKG_NAME_QA = "com.thoughtworks.okapia_app.qa";
+const PKG_NAME_PROD = "com.thoughtworks.okapia_app";
 
 
 class DevEnv extends Env{

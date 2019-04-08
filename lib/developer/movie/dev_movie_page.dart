@@ -34,7 +34,7 @@ class _DevMoviePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text("Dev movie page")),
         body: StreamBuilder<DevMovieResponseModel>(
-            stream: bloc.moviesController,
+            stream: bloc.moviesController.stream,
             initialData: bloc.moviesController.value,
             builder: (context, snapshot) {
               var itemList = snapshot.data.subjects;

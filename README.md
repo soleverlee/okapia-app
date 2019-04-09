@@ -10,8 +10,15 @@ A few resources to get you started if this is your first Flutter project:
 
 
 ## 更新json文件
+
 一次性更新json文件：
+
+```shell
 flutter packages pub run build_runner build
+```
 
 持续更新json文件
+
+```shell
 flutter packages pub run build_runner watch
+```

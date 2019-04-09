@@ -5,8 +5,7 @@ abstract class Disposable {
   void dispose();
 }
 
-abstract class BaseBloc implements Disposable{}
-
+abstract class BaseBloc implements Disposable {}
 
 class BlocProvider<T extends BaseBloc> extends StatefulWidget {
   BlocProvider({
@@ -32,7 +31,7 @@ class BlocProvider<T extends BaseBloc> extends StatefulWidget {
     ///找不到provider就从app bloc 里找
     final appBlocType = _typeOf<BlocProvider<AppBloc>>();
     BlocProvider<AppBloc> appBlocProvider =
-    context.ancestorWidgetOfExactType(appBlocType);
+        context.ancestorWidgetOfExactType(appBlocType);
     return appBlocProvider.bloc.find<T>();
   }
 
@@ -40,7 +39,6 @@ class BlocProvider<T extends BaseBloc> extends StatefulWidget {
 }
 
 class _BlocProviderState<T> extends State<BlocProvider<BaseBloc>> {
-
   @override
   void dispose() {
     widget.bloc.dispose();

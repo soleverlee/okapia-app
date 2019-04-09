@@ -8,14 +8,14 @@ class DevPages extends StatelessWidget {
       appBar: AppBar(title: Text("Dev menus")),
       body: Center(
           child: Column(
-            children: <Widget>[
-              GestureDetector(
-                  onTap: () {
-                    Routers.jumpToDevMoviePage(context);
-                  },
-                  child: Text("Jump movie list")),
-            ],
-          )),
+        children: <Widget>[
+          GestureDetector(
+              onTap: () {
+                Routers.jumpToDevMoviePage(context);
+              },
+              child: Text("Jump movie list")),
+        ],
+      )),
     );
   }
 }

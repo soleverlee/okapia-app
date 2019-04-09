@@ -18,9 +18,9 @@ class _HomeExPageState extends State<HomePage> {
     DevCountPage(title: "test")
   ];
 
-  void _pageChange(int index){
+  void _pageChange(int index) {
     setState(() {
-      if(_currentIndex != index){
+      if (_currentIndex != index) {
         _currentIndex = index;
       }
     });
@@ -30,7 +30,7 @@ class _HomeExPageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView.builder(
-        itemBuilder: (context,index) {
+        itemBuilder: (context, index) {
           return _pages[index];
         },
         controller: _pageController,
@@ -42,18 +42,12 @@ class _HomeExPageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("tab1")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text("tab1")),
+              icon: Icon(Icons.collections), title: Text("tab2")),
+          BottomNavigationBarItem(icon: Icon(Icons.movie), title: Text("tab3")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.collections),
-              title:Text("tab2")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.movie),
-              title: Text("tab3")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              title: Text("tab4")),
+              icon: Icon(Icons.account_circle), title: Text("tab4")),
         ],
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,

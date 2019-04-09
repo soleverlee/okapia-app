@@ -34,6 +34,14 @@ dependencies:
   # 获取版本信息
   package_info: '^0.4.0'
 
+  # sqlite数据库
+  sqflite: any
+  # 目录地址
+  path_provider: any
+  # toast
+  fluttertoast: ^3.0.3
+  english_words: ^3.1.0
+
 
 dev_dependencies:
   flutter_test:

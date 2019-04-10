@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:okapia_app/developer/sqlite/db_helper.dart';
+import 'package:okapia_app/developer/sqlite/dev_db_helper.dart';
 import 'package:okapia_app/developer/sqlite/dev_user_models.dart';
 
 Future<List<User>> getUsersFromDB() {

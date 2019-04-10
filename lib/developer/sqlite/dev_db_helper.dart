@@ -40,14 +40,14 @@ class DBHelper {
   insertUser(User newUser) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return await transaction.insert("User", newUser.toMap());
+      return await transaction.insert("User", newUser.toJson());
     });
   }
 
   getUserById(int id) async {
     final db = await database;
     var res = await db.query("User", where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? User.fromMap(res.first) : Null;
+    return res.isNotEmpty ? User.fromJson(res.first) : Null;
   }
 
   Future<List<User>> getAllUsers() async {
@@ -70,7 +70,7 @@ class DBHelper {
   updateUser(User updateUser) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return transaction.update("User", updateUser.toMap(),
+      return transaction.update("User", updateUser.toJson(),
           where: "id = ?", whereArgs: [updateUser.id]);
     });
   }

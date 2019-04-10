@@ -53,7 +53,7 @@ class PasswordDBProvider {
 
   Future<List<Password>> getAllPasswords() async {
     final db = await database;
-    var res = await db.query("User");
+    var res = await db.query(_tableName);
     List<Password> passwords = List();
     if (res.isNotEmpty) {
       for (var i = 0; i < res.length; i++) {

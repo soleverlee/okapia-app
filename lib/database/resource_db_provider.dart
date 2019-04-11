@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:okapia_app/models/constant.dart';
+import 'package:okapia_app/models/resource.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ConstantDBProvider {
+class ResourceDBProvider {
   static Database _database;
-  static final _tableName = "Constant";
+  static final _tableName = "Resource";
 
   Future<Database> get database async {
     if (_database == null) {
@@ -29,45 +29,45 @@ class ConstantDBProvider {
         "value TEXT)");
   }
 
-  rawInsertConstant(Constant newConstant) async {
+  rawInsertResource(Resource newResource) async {
     final db = await database;
     await db.transaction((transaction) async {
       final string = "INSERT Into $_tableName (name, value) "
-          "VALUES (${newConstant.name}, ${newConstant.value})";
+          "VALUES (${newResource.name}, ${newResource.value})";
       return await transaction.rawInsert(string);
     });
   }
 
-  insertConstant(Constant newConstant) async {
+  insertResource(Resource newResource) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return await transaction.insert(_tableName, newConstant.toJson());
+      return await transaction.insert(_tableName, newResource.toJson());
     });
   }
 
-  getConstantById(int id) async {
+  getResourceById(int id) async {
     final db = await database;
     var res = await db.query(_tableName, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? Constant.fromJson(res.first) : Null;
+    return res.isNotEmpty ? Resource.fromJson(res.first) : Null;
   }
 
-  updateConstant(Constant updateConstant) async {
+  updateResource(Resource updateResource) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return transaction.update(_tableName, updateConstant.toJson(),
-          where: "id = ?", whereArgs: [updateConstant.id]);
+      return transaction.update(_tableName, updateResource.toJson(),
+          where: "id = ?", whereArgs: [updateResource.id]);
     });
   }
 
-  deleteConstant(Constant deleteConstant) async {
+  deleteResource(Resource deleteResource) async {
     final db = await database;
     await db.transaction((transaction) async {
       return transaction
-          .delete(_tableName, where: "id = ?", whereArgs: [deleteConstant.id]);
+          .delete(_tableName, where: "id = ?", whereArgs: [deleteResource.id]);
     });
   }
 
-  deleteAllConstants() async {
+  deleteAllResources() async {
     final db = await database;
     await db.transaction((transaction) async {
       transaction.rawDelete("Delete * from $_tableName");

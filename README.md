@@ -26,3 +26,4 @@ flutter packages pub run build_runner watch
 
 ## 加密算法
 http://riguz.com/kdbx4-format/
+https://pub.dartlang.org/packages/password

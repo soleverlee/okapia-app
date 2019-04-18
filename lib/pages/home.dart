@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/developer/dev_count.dart';
 import 'package:okapia_app/developer/dev_pages.dart';
+import 'package:okapia_app/themes/base.dart';
+import 'package:okapia_app/themes/index.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -40,22 +42,28 @@ class _HomeExPageState extends State<HomePage> {
         },
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("tab1")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.collections), title: Text("tab2")),
-          BottomNavigationBarItem(icon: Icon(Icons.movie), title: Text("tab3")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text("tab4")),
-        ],
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          _pageChange(index);
-          _pageController.jumpToPage(index);
-        },
-      ),
+      bottomNavigationBar: BasicTheme(
+        themeData: Themes.buildBottomNavigationBarTheme(context),
+        widget: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.list), title: Text("浏览")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.collections), title: Text("分类")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.share), title: Text("更多工具")),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                title: Text("设置"),
+                backgroundColor: Colors.red),
+          ],
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            _pageChange(index);
+            _pageController.jumpToPage(index);
+          },
+        ),
+      ).build(),
     );
   }
 }

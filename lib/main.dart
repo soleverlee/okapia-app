@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:okapia_app/base/app_bloc.dart';
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/routers.dart';
+import 'package:okapia_app/themes/index.dart';
 
 void main() => runApp(MainApp());
 
@@ -26,6 +27,7 @@ class _MainAppState extends State<MainApp> {
         child: Container(
           child: MaterialApp(
             title: "Okapia",
+            theme: Themes.appBarTheme,
             home: Routers.homeBuilder(context),
             routes: Routers.routerMap,
           ),

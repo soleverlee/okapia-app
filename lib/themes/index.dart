@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class Themes {
   static ThemeData appBarTheme = ThemeData(
-    primaryColor: Color.fromRGBO(0, 43, 54, 1),
-    accentColor: Colors.white,
-
-    // Define the default Font Family
-    fontFamily: 'Montserrat',
-
-    // Define the default TextTheme. Use this to specify the default
-    // text styling for headlines, titles, bodies of text, and more.
+    primaryColor: Colors.white,
+//    accentColor: Colors.red,
+//
+//    // Define the default Font Family
+//    fontFamily: 'Montserrat',
+//
+//    // Define the default TextTheme. Use this to specify the default
+//    // text styling for headlines, titles, bodies of text, and more.
     textTheme: TextTheme(
       headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
       title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),

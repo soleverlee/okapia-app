@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/developer/dev_count.dart';
 import 'package:okapia_app/developer/dev_pages.dart';
+import 'package:okapia_app/pages/index/index.dart';
 import 'package:okapia_app/themes/base.dart';
 import 'package:okapia_app/themes/index.dart';
 
@@ -14,7 +15,7 @@ class _HomeExPageState extends State<HomePage> {
   var _currentIndex = _initialIndex;
   var _pageController = PageController(initialPage: _initialIndex);
   var _pages = [
-    DevEmpty(),
+    IndexPage(),
     DevEmpty(),
     DevPages(),
     DevCountPage(title: "test")

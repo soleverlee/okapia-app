@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/pages/index/list_item.dart';
+import 'package:okapia_app/pages/index/list_title.dart';
+import 'package:okapia_app/routers.dart';
+import 'package:okapia_app/themes/index.dart';
 
 class IndexPage extends StatelessWidget {
   final String title;
@@ -23,39 +27,35 @@ class IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: Column(
         children: <Widget>[
-          buildContainerTitle(context),
+          ListTitle(title: "我的全部密码 (${listItems.length})"),
           buildContainerList(),
         ],
       ),
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
       title: Text(title),
       centerTitle: true,
       elevation: 0.0,
-      textTheme: TextTheme(
-          title:
-              TextStyle(fontSize: 18.0, color: Color.fromRGBO(0, 43, 54, 1))),
+      textTheme: Themes.appBarTextTheme,
       iconTheme: IconThemeData(color: Color.fromRGBO(170, 170, 170, 1)),
       leading: IconButton(
-          icon: Icon(Icons.search), iconSize: 30.0, onPressed: onSearch),
-      actions: buildAppBarActions(),
+          icon: Icon(Icons.search),
+          iconSize: 30.0,
+          onPressed: () => Routers.jumpToIndexSearchPage(context)),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.more_vert),
+          iconSize: 30.0,
+          onPressed: () => print("more"),
+        )
+      ],
     );
-  }
-
-  List<Widget> buildAppBarActions() {
-    return <Widget>[
-      IconButton(
-        icon: Icon(Icons.more_vert),
-        iconSize: 30.0,
-        onPressed: onMore,
-      )
-    ];
   }
 
   Expanded buildContainerList() {
@@ -65,60 +65,13 @@ class IndexPage extends StatelessWidget {
           shrinkWrap: true,
           itemCount: listItems.length,
           itemBuilder: (BuildContext context, int index) {
-            return buildListItem(index);
+            return ListItem(
+              title: listItems[index],
+              onTap: () {
+                print("onTap");
+              },
+            );
           }),
     );
-  }
-
-  Column buildListItem(int index) {
-    return Column(
-      children: <Widget>[
-        InkWell(
-          child: Container(
-            height: 35.0,
-            padding: EdgeInsets.only(left: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  listItems[index],
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
-                ),
-                IconButton(
-                  icon: Icon(Icons.navigate_next),
-                  color: Color.fromRGBO(211, 211, 211, 1),
-                ),
-              ],
-            ),
-          ),
-          onTap: onListItemDetail,
-        ),
-        Divider(),
-      ],
-    );
-  }
-
-  Container buildContainerTitle(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(color: Color.fromRGBO(244, 244, 244, 1)),
-      padding: EdgeInsets.only(top: 14.0, bottom: 14.0, left: 20.0),
-      child: Text(
-        "我的全部密码 (${listItems.length})",
-        style: TextStyle(fontSize: 14.0, color: Color.fromRGBO(16, 16, 16, 1)),
-      ),
-    );
-  }
-
-  void onSearch() {
-    print("search");
-  }
-
-  void onListItemDetail() {
-    print("Taped");
-  }
-
-  void onMore() {
-    print("more");
   }
 }

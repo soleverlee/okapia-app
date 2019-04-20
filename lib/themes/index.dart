@@ -17,6 +17,9 @@ class Themes {
     ),
   );
 
+  static TextTheme appBarTextTheme = TextTheme(
+      title: TextStyle(fontSize: 16.0, color: Colors.black));
+
   static ThemeData Function(BuildContext context)
       buildBottomNavigationBarTheme = (BuildContext context) =>
           Theme.of(context).copyWith(

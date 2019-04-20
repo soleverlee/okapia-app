@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:okapia_app/pages/index/link_button.dart';
-import 'package:okapia_app/pages/index/list_item.dart';
-import 'package:okapia_app/pages/index/list_title.dart';
+import 'package:okapia_app/pages/colors.dart';
+import 'package:okapia_app/pages/widgets/link_button.dart';
+import 'package:okapia_app/pages/widgets/list_item.dart';
+import 'package:okapia_app/pages/widgets/list_title.dart';
 import 'package:okapia_app/themes/index.dart';
 
 class IndexSearchPage extends StatefulWidget {
@@ -113,7 +114,7 @@ class IndexSearchState extends State<IndexSearchPage> {
         children: <Widget>[
           Text(
             "最近搜索",
-            style: TextStyle(color: Color.fromRGBO(16, 16, 16, 1)),
+            style: TextStyle(color: PageColors.color161616),
           ),
           Row(
             children: <Widget>[

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/pages/colors.dart';
 
 class ListTitle extends StatelessWidget {
   final String title;
@@ -13,7 +14,7 @@ class ListTitle extends StatelessWidget {
       padding: EdgeInsets.only(top: 14.0, bottom: 14.0, left: 20.0),
       child: Text(
         title,
-        style: TextStyle(fontSize: 14.0, color: Color.fromRGBO(16, 16, 16, 1)),
+        style: TextStyle(fontSize: 14.0, color: PageColors.color161616),
       ),
     );
   }

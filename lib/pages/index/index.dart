@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:okapia_app/pages/index/list_item.dart';
-import 'package:okapia_app/pages/index/list_title.dart';
+import 'package:okapia_app/pages/widgets/list_item.dart';
+import 'package:okapia_app/pages/widgets/list_title.dart';
 import 'package:okapia_app/routers.dart';
 import 'package:okapia_app/themes/index.dart';
 

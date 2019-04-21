@@ -13,8 +13,7 @@ Resource _$ResourceFromJson(Map<String, dynamic> json) {
       value: json['value'] as String);
 }
 
-Map<String, dynamic> _$ResourceToJson(Resource instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ResourceToJson(Resource instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'value': instance.value

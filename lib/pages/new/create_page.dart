@@ -33,7 +33,11 @@ class _CreatePageState extends State<CreatePage> {
           ),
         ),
         centerTitle: true,
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: null),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
         elevation: 0,
         backgroundColor: Colors.white,
       ),

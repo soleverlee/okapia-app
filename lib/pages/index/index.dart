@@ -74,6 +74,7 @@ class IndexPage extends StatelessWidget {
               title: listItems[index],
               onTap: () {
                 print("onTap");
+                Navigator.of(context).pushNamed(Routers.DETAIL);
               },
             );
           }),

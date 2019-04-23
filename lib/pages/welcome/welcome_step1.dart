@@ -4,6 +4,10 @@ import 'package:okapia_app/pages/welcome/welcome_widget.dart';
 
 
 class WelcomeStep1 extends StatelessWidget{
+  final VoidCallback onNext;
+
+  const WelcomeStep1({Key key, this.onNext}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,9 +41,11 @@ class WelcomeStep1 extends StatelessWidget{
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 18),
-                    child: Text("开始设置",
-                        style:
-                        TextStyle(fontSize: 18, color: PageColors.orange1)),
+                    child: GestureDetector(
+                      onTap: onNext,
+                      child: Text("开始设置",
+                          style: TextStyle(fontSize: 18, color: PageColors.orange1)),
+                    ),
                   ),
                 ],
               ),

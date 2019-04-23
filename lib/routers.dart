@@ -5,12 +5,13 @@ import 'package:okapia_app/pages/detail/detail_page.dart';
 import 'package:okapia_app/pages/new/create_page.dart';
 import 'package:okapia_app/pages/home.dart';
 import 'package:okapia_app/pages/index/search.dart';
+import 'package:okapia_app/pages/welcome/welcome_widget.dart';
 
 class Routers {
   static String CREATE = "/create";
   static String DETAIL = "/detail";
 
-  static final homeBuilder = (BuildContext context) => HomePage();
+  static final homeBuilder = (BuildContext context) => WelcomeWidget();//HomePage();
 
   static var routerMap = <String, WidgetBuilder>{
     "/develop": (BuildContext context) => DevelopApp(),

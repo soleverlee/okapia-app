@@ -34,6 +34,11 @@ class IndexPage extends StatelessWidget {
           buildContainerList(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Color(0xffFF6347),
+        onPressed: () {Routers.jumpToCreatePage(context);},
+      ),
     );
   }
 

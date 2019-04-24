@@ -7,6 +7,10 @@ import 'package:okapia_app/themes/index.dart';
 void main() => runApp(MainApp());
 
 class MainApp extends StatefulWidget {
+  MainApp() {
+    Routers.configureRouters();
+  }
+
   @override
   State<StatefulWidget> createState() => _MainAppState();
 }
@@ -29,7 +33,7 @@ class _MainAppState extends State<MainApp> {
             title: "Okapia",
             theme: Themes.appBarTheme,
             home: Routers.homeBuilder(context),
-            routes: Routers.routerMap,
+            onGenerateRoute: Routers.router.generator,
           ),
         ));
   }

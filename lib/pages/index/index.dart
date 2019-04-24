@@ -37,7 +37,9 @@ class IndexPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Color(0xffFF6347),
-        onPressed: () {Routers.jumpToCreatePage(context);},
+        onPressed: () {
+          Routers.router.navigateTo(context, "/create");
+        },
       ),
     );
   }
@@ -52,7 +54,7 @@ class IndexPage extends StatelessWidget {
       leading: IconButton(
           icon: Icon(Icons.search),
           iconSize: 30.0,
-          onPressed: () => Routers.jumpToIndexSearchPage(context)),
+          onPressed: () => Routers.router.navigateTo(context, "/search")),
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.more_vert),
@@ -74,7 +76,7 @@ class IndexPage extends StatelessWidget {
               title: listItems[index],
               onTap: () {
                 print("onTap");
-                Navigator.of(context).pushNamed(Routers.DETAIL);
+                Routers.router.navigateTo(context, "/detail");
               },
             );
           }),

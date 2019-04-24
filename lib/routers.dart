@@ -1,6 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:okapia_app/developer/movie/dev_movie_page.dart';
+import 'package:okapia_app/pages/detail/detail_page.dart';
 import 'package:okapia_app/pages/home.dart';
 import 'package:okapia_app/pages/index/search.dart';
 import 'package:okapia_app/pages/new/create_page.dart';
@@ -17,9 +18,8 @@ class Routers {
         handler: _generatePageHandle(CreatePage()),
         transitionType: TransitionType.inFromRight);
 
-    router.define("/detail",
-        handler: _generatePageHandle(CreatePage()),
-        transitionType: TransitionType.inFromRight);
+    router.define("/detail/:title",
+        handler: detailHandler, transitionType: TransitionType.inFromRight);
 
     router.define("/search", handler: _generatePageHandle(IndexSearchPage()));
   }
@@ -36,3 +36,9 @@ class Routers {
   static void jumpToDevMoviePage(BuildContext context) => Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => DevMoviePageContainer()));
 }
+
+var detailHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      String title = params["title"]?.first;
+      return DetailPage(title: title,);
+    });

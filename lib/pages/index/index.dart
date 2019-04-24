@@ -76,7 +76,7 @@ class IndexPage extends StatelessWidget {
               title: listItems[index],
               onTap: () {
                 print("onTap");
-                Routers.router.navigateTo(context, "/detail");
+                Routers.router.navigateTo(context, "/detail/${listItems[index]}");
               },
             );
           }),

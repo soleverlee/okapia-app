@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:okapia_app/pages/colors.dart';
+import 'package:okapia_app/routers.dart';
 
 class DetailPage extends StatefulWidget {
+  final String title;
+
+  const DetailPage({Key key, @required this.title}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _DetailPageState();
@@ -27,17 +32,12 @@ class _DetailPageState extends State<DetailPage> {
   Widget _buildPasswordMenu() {
     return PopupMenuButton(
       itemBuilder: (BuildContext context) {
-        return <PopupMenuItem<_PasswordMenu>>[
-          PopupMenuItem(
-              child: Text(passwordMenuText[_PasswordMenu.COPY]),
-              value: _PasswordMenu.COPY),
-          PopupMenuItem(
-              child: Text(passwordMenuText[_PasswordMenu.SHOW]),
-              value: _PasswordMenu.SHOW),
-          PopupMenuItem(
-              child: Text(passwordMenuText[_PasswordMenu.EXPAND]),
-              value: _PasswordMenu.EXPAND),
-        ];
+        return _PasswordMenu.values
+            .map((value) => PopupMenuItem(
+                  child: Text(passwordMenuText[value]),
+                  value: value,
+                ))
+            .toList();
       },
       onSelected: (_PasswordMenu value) {
         print(">>>>> value:$value");
@@ -56,7 +56,7 @@ class _DetailPageState extends State<DetailPage> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.of(context).pop();
+              Routers.router.pop(context);
             }),
         actions: <Widget>[
           GestureDetector(
@@ -76,7 +76,9 @@ class _DetailPageState extends State<DetailPage> {
         child: Column(
           children: <Widget>[
             Divider(height: 1, color: PageColors.colorf5f5f5),
-            _buildItem("标题", children: <Widget>[]),
+            _buildItem("标题", children: <Widget>[
+              Expanded(child: Text(widget.title)),
+            ]),
             Divider(height: 1, color: PageColors.colorf5f5f5),
             _buildItem("分类", children: <Widget>[]),
             Divider(height: 1, color: PageColors.colorf5f5f5),

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:okapia_app/pages/colors.dart';
+import 'package:okapia_app/pages/widgets/title_bar.dart';
 import 'package:okapia_app/routers.dart';
 
 class DetailPage extends StatefulWidget {
@@ -29,6 +31,9 @@ class _DetailPageState extends State<DetailPage> {
     _PasswordMenu.EXPAND: "展开",
   };
 
+  String password = "12342132";
+  bool shouldShowPassword = false;
+
   Widget _buildPasswordMenu() {
     return PopupMenuButton(
       itemBuilder: (BuildContext context) {
@@ -41,6 +46,17 @@ class _DetailPageState extends State<DetailPage> {
       },
       onSelected: (_PasswordMenu value) {
         print(">>>>> value:$value");
+
+        switch (value) {
+          case _PasswordMenu.COPY:
+            Clipboard.setData(new ClipboardData(text: "aedseresfs"));
+            break;
+          case _PasswordMenu.SHOW:
+            _toggleShowPassword();
+            break;
+          case _PasswordMenu.EXPAND:
+            break;
+        }
       },
     );
   }
@@ -48,30 +64,7 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("查看密码"),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Routers.router.pop(context);
-            }),
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.only(right: 20),
-              child: Text(
-                "更新",
-                style: TextStyle(color: Color(0xffCB4B16)),
-              ),
-            ),
-          )
-        ],
-      ),
+      appBar: _buildTitleBar(context),
       body: Container(
         child: Column(
           children: <Widget>[
@@ -83,16 +76,46 @@ class _DetailPageState extends State<DetailPage> {
             _buildItem("分类", children: <Widget>[]),
             Divider(height: 1, color: PageColors.colorf5f5f5),
             _buildItem("密码", children: <Widget>[
-              Expanded(
-                child: Text(
-                  "123456678",
-                ),
-              ),
+              Expanded(child: _getPasswordText()),
               _buildPasswordMenu()
             ]),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _getPasswordText() {
+    return Text(shouldShowPassword ? password : "*****");
+  }
+
+  void _toggleShowPassword() {
+    setState(() {
+      shouldShowPassword = !shouldShowPassword;
+    });
+  }
+
+  Widget _buildTitleBar(BuildContext context) {
+    return TitleBar(
+      title: Text("查看密码"),
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Routers.router.pop(context);
+          }),
+      actions: <Widget>[
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            alignment: Alignment.centerRight,
+            margin: EdgeInsets.only(right: 20),
+            child: Text(
+              "更新",
+              style: TextStyle(color: Color(0xffCB4B16)),
+            ),
+          ),
+        )
+      ],
     );
   }
 

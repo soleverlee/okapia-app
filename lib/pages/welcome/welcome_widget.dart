@@ -26,43 +26,42 @@ class _WelcomeState extends State<WelcomeWidget> {
   int _curStep = 0;
 
   void _stepTo(int index) {
-    _pageController.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.linear);
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 500), curve: Curves.linear);
   }
 
   @override
   void initState() {
     super.initState();
-    _stepTitles = [
-      "欢迎使用Okapia",
-      "设置主密码",
-      "开启指纹解锁"
-    ]
+    _stepTitles = ["欢迎使用Okapia", "设置主密码", "开启指纹解锁"];
     _stepPages = [
       WelcomeStep1(
         onNext: () => _stepTo(1),
       ),
       WelcomeStep2(
-        onNext: ()=> _stepTo(2),
+        onNext: () => _stepTo(2),
       ),
-      WelcomeStep3()
+      WelcomeStep3(
+        onNext: (BuildContext context) =>
+            Routers.router.navigateTo(context, "/home"),
+      )
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: PageColors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTitle(context),
-            _buildLines(context),
-            Expanded(child: _buildSteps(context))
-          ],
-        ),
+        body: Container(
+      color: PageColors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _buildTitle(context),
+          _buildLines(context),
+          Expanded(child: _buildSteps(context))
+        ],
       ),
-    );
+    ));
   }
 
   Widget _buildTitle(BuildContext context) {
@@ -85,9 +84,9 @@ class _WelcomeState extends State<WelcomeWidget> {
           top: 10,
           bottom: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children:  List.generate(_stepPages.length, (index)=>_ShortLine(select: index == _curStep))
-      ),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(_stepPages.length,
+              (index) => _ShortLine(select: index == _curStep))),
     );
   }
 
@@ -101,6 +100,7 @@ class _WelcomeState extends State<WelcomeWidget> {
         });
       },
       itemBuilder: (BuildContext context, int index) => _stepPages[index],
+      itemCount: _stepPages.length,
     );
   }
 }

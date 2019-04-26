@@ -6,10 +6,10 @@ import 'package:okapia_app/pages/welcome/welcome_step3.dart';
 import 'package:okapia_app/routers.dart';
 
 class WelcomeWidgetStyle {
-  static const double LEFT_MARGIN = 55;
-  static const double RIGHT_MARGIN = 55;
+  static const double LEFT_MARGIN = 55.0;
+  static const double RIGHT_MARGIN = 55.0;
   static const SubTextStyle = TextStyle(color: PageColors.grey1);
-  static const double BOTTOM_MARGIN = 60;
+  static const double BOTTOM_MARGIN = 60.0;
 }
 
 class WelcomeWidget extends StatefulWidget {

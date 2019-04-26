@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/welcome/welcome_widget.dart';
 
-class WelcomeStep3 extends StatelessWidget {
-  final Function(BuildContext context) onNext;
 
-  const WelcomeStep3({Key key, this.onNext}) : super(key: key);
+
+class WelcomeStep3 extends StatelessWidget {
+  final VoidCallback onNext;
+  final VoidCallback onBefore;
+
+  const WelcomeStep3({Key key, this.onNext, this.onBefore}) : super(key: key);
 
   Widget build(BuildContext context) {
     return Padding(
@@ -18,7 +21,7 @@ class WelcomeStep3 extends StatelessWidget {
           Text("指纹解锁能够帮助您记住密码，只需要验证指纹即可访问您的密码仓库。当您开启这个选项的时候，请确保您的手机只能被自己访问。",
               style: WelcomeWidgetStyle.SubTextStyle),
           Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Center(
               child: Image(
                 height: 235,
@@ -38,7 +41,9 @@ class WelcomeStep3 extends StatelessWidget {
                     Text(
                       "关闭",
                     ),
-                    Icon(Icons.arrow_forward_ios)
+                    Icon(
+                        Icons.keyboard_arrow_right,
+                        color: PageColors.grey1)
                   ],
                 )
               ],
@@ -48,24 +53,26 @@ class WelcomeStep3 extends StatelessWidget {
             height: 1,
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: WelcomeWidgetStyle.BOTTOM_MARGIN),
-                  child: GestureDetector(
-                    onTap: () {
-                      onNext(context);
-                    },
-                    child: Text(
-                      "下一步",
-                      style: TextStyle(fontSize: 18, color: PageColors.grey1),
-                    ),
-                  ),
-                )
-              ],
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: WelcomeWidgetStyle.BOTTOM_MARGIN),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                        onTap: onBefore,
+                        child: Text("上一步", style:WelcomeWidgetStyle.OriginTextStyle)),
+                    GestureDetector(
+                      onTap: onNext,
+                      child: Text(
+                        "开始使用",
+                        style: WelcomeWidgetStyle.OriginTextStyle,
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           )
         ],

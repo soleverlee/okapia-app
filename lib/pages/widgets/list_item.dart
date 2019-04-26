@@ -25,6 +25,7 @@ class ListItem extends StatelessWidget {
               style: TextStyle(fontSize: 16.0, color: Colors.black),
             ),
             IconButton(
+              onPressed: (){},
               icon: Icon(Icons.navigate_next),
               color: Color.fromRGBO(211, 211, 211, 1),
             ),

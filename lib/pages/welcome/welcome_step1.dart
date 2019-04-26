@@ -44,7 +44,7 @@ class WelcomeStep1 extends StatelessWidget{
                     child: GestureDetector(
                       onTap: onNext,
                       child: Text("开始设置",
-                          style: TextStyle(fontSize: 18, color: PageColors.orange1)),
+                          style: WelcomeWidgetStyle.OriginTextStyle),
                     ),
                   ),
                 ],

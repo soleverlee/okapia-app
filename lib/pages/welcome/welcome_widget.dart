@@ -9,7 +9,8 @@ class WelcomeWidgetStyle {
   static const double LEFT_MARGIN = 55.0;
   static const double RIGHT_MARGIN = 55.0;
   static const SubTextStyle = TextStyle(color: PageColors.grey1);
-  static const double BOTTOM_MARGIN = 60.0;
+  static const double BOTTOM_MARGIN = 80.0;
+  static const OriginTextStyle = TextStyle(fontSize: 18, color: PageColors.orange1);
 }
 
 class WelcomeWidget extends StatefulWidget {
@@ -27,7 +28,7 @@ class _WelcomeState extends State<WelcomeWidget> {
 
   void _stepTo(int index) {
     _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 500), curve: Curves.linear);
+        duration: const Duration(milliseconds: 300), curve: Curves.linear);
   }
 
   @override
@@ -42,8 +43,8 @@ class _WelcomeState extends State<WelcomeWidget> {
         onNext: () => _stepTo(2),
       ),
       WelcomeStep3(
-        onNext: (BuildContext context) =>
-            Routers.router.navigateTo(context, "/home"),
+        onBefore: ()=>_stepTo(1),
+        onNext: () => Routers.router.navigateTo(context, "/home"),
       )
     ];
   }
@@ -93,7 +94,7 @@ class _WelcomeState extends State<WelcomeWidget> {
   Widget _buildSteps(BuildContext context) {
     return PageView.builder(
       controller: _pageController,
-      physics: PageScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       onPageChanged: (index) {
         setState(() {
           _curStep = index;

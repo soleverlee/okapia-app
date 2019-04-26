@@ -4,6 +4,7 @@ import 'package:okapia_app/developer/dev_pages.dart';
 import 'package:okapia_app/pages/index/index.dart';
 import 'package:okapia_app/themes/base.dart';
 import 'package:okapia_app/themes/index.dart';
+import 'package:okapia_app/themes/icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,13 +48,13 @@ class _HomeExPageState extends State<HomePage> {
         themeData: Themes.buildBottomNavigationBarTheme(context),
         widget: BottomNavigationBar(
           items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.list), title: Text("浏览")),
+            BottomNavigationBarItem(icon: Icon(AliIcon.list), title: Text("浏览")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.collections), title: Text("分类")),
+                icon: Icon(AliIcon.group), title: Text("分类")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.share), title: Text("更多工具")),
+                icon: Icon(AliIcon.toolbox), title: Text("更多工具")),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
+                icon: Icon(AliIcon.settings),
                 title: Text("设置"),
                 backgroundColor: Colors.red),
           ],

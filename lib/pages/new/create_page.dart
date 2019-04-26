@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:okapia_app/application.dart';
+import 'package:okapia_app/models/password.dart';
 import 'package:okapia_app/pages/new/password_text_field.dart';
+import 'package:okapia_app/pages/widgets/title_bar.dart';
+import 'package:okapia_app/routers.dart';
 
 const edgeHorizontal = 16.0;
 const colorWarningText = Color(0xFFE51C23);
@@ -24,7 +28,7 @@ class _CreatePageState extends State<CreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: TitleBar(
         title: Text(
           "创建新密码",
           style: TextStyle(
@@ -32,14 +36,11 @@ class _CreatePageState extends State<CreatePage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        centerTitle: true,
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.of(context).pop();
+              Routers.router.pop(context);
             }),
-        elevation: 0,
-        backgroundColor: Colors.white,
       ),
       body: Container(
         color: Color(0xFFF4F4F4),
@@ -204,14 +205,16 @@ class _CreatePageState extends State<CreatePage> {
       return;
     }
 
-    _save();
+    _save(title, catalog, password);
   }
 
-  void _save() {
+  void _save(String title, String catalog, String password) {
     _showLoadingOrNot(true);
 
+    Application.passwordDBProvider.rawInsertPassword(new Password(id: 1, title:title, content: password ));
     Future.delayed(const Duration(milliseconds: 2000), () {
       _showLoadingOrNot(false);
+      Routers.router.pop(context);
     });
   }
 

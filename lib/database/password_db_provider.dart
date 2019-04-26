@@ -34,7 +34,7 @@ class PasswordDBProvider {
     await db.transaction((transaction) async {
       return await transaction
           .rawInsert("INSERT Into $_tableName (title, content) "
-              "VALUES (${newPassword.title}, ${newPassword.content})");
+              "VALUES ('${newPassword.title}', '${newPassword.content}')");
     });
   }
 

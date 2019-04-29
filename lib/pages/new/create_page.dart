@@ -211,8 +211,9 @@ class _CreatePageState extends State<CreatePage> {
   void _save(String title, String catalog, String password) {
     _showLoadingOrNot(true);
 
-    Application.passwordDBProvider.rawInsertPassword(new Password(id: 1, title:title, content: password ));
-    Future.delayed(const Duration(milliseconds: 2000), () {
+    Application.passwordDBProvider
+        .rawInsertPassword(new Password(title: title, content: password))
+        .whenComplete(() {
       _showLoadingOrNot(false);
       Routers.router.pop(context);
     });

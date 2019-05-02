@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/pages/colors.dart';
 
 class ListItem extends StatelessWidget {
   final String title;
@@ -12,22 +13,36 @@ class ListItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(top: 2.0, bottom: 2.0, left: 20.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: PageColors.white,
           border: Border(
-            bottom: BorderSide(color: Color.fromRGBO(213, 213, 213, 1)),
+            bottom: BorderSide(color: PageColors.grey2),
           ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(fontSize: 16.0, color: Colors.black),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(right: 15.0),
+                  child: Icon(
+                    Icons.streetview,
+                    size: 24.0,
+                    color: PageColors.orange1,
+                  ),
+                ),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 16.0, color: Colors.black),
+                ),
+              ],
             ),
             IconButton(
-              onPressed: (){},
+              onPressed: () {},
               icon: Icon(Icons.navigate_next),
-              color: Color.fromRGBO(211, 211, 211, 1),
+              color: PageColors.grey3,
             ),
           ],
         ),

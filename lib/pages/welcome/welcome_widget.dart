@@ -71,7 +71,7 @@ class _WelcomeState extends State<WelcomeWidget> {
           const EdgeInsets.only(left: WelcomeWidgetStyle.LEFT_MARGIN, top: 90),
       child: Text(_stepTitles[_curStep],
           style: TextStyle(
-              color: PageColors.color161616,
+              color: PageColors.black1,
               fontSize: 20.0,
               fontWeight: FontWeight.bold)),
     );

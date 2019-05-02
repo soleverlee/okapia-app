@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/pages/colors.dart';
 
 class LinkButton extends StatelessWidget {
   final String title;
@@ -16,8 +17,9 @@ class LinkButton extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              decoration: TextDecoration.underline,
-              color: Color.fromRGBO(35, 146, 255, 1)),
+            decoration: TextDecoration.underline,
+            color: PageColors.orange1,
+          ),
         ),
       ),
       onTap: onTap,

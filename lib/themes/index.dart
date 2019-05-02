@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/pages/colors.dart';
 
 class Themes {
   static ThemeData appBarTheme = ThemeData(
@@ -23,8 +24,8 @@ class Themes {
   static ThemeData Function(BuildContext context)
       buildBottomNavigationBarTheme = (BuildContext context) =>
           Theme.of(context).copyWith(
-              canvasColor: Color.fromRGBO(247, 247, 247, 0.8),
-              primaryColor: Color.fromRGBO(63, 81, 181, 1),
+              canvasColor: Color(0xCCF7F7F7),
+              primaryColor: PageColors.orange1,
               textTheme: TextTheme(
                   caption: TextStyle(color: Color.fromRGBO(170, 170, 170, 1))));
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';
+import 'package:okapia_app/pages/widgets/search_bar.dart';
 import 'package:okapia_app/routers.dart';
 import 'package:okapia_app/themes/index.dart';
 
@@ -36,7 +38,7 @@ class IndexPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Color(0xffFF6347),
+        backgroundColor: PageColors.orange1,
         onPressed: () {
           Routers.router.navigateTo(context, "/create");
         },
@@ -46,20 +48,37 @@ class IndexPage extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text(title),
-      centerTitle: true,
+      title: Stack(
+        children: <Widget>[
+          Center(
+            child: SearchBar(
+              autoFocus: false,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            child: GestureDetector(
+              child: Container(
+                child: Text(''),
+              ),
+              onTap: () => Routers.router.navigateTo(context, "/search"),
+            ),
+          )
+        ],
+      ),
       elevation: 0.0,
       textTheme: Themes.appBarTextTheme,
-      iconTheme: IconThemeData(color: Color.fromRGBO(170, 170, 170, 1)),
-      leading: IconButton(
-          icon: Icon(Icons.search),
-          iconSize: 30.0,
-          onPressed: () => Routers.router.navigateTo(context, "/search")),
+      iconTheme: IconThemeData(color: PageColors.white),
+      automaticallyImplyLeading: false,
+      backgroundColor: PageColors.orange1,
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.more_vert),
-          iconSize: 30.0,
-          onPressed: () => print("more"),
+          icon: Icon(Icons.help_outline),
+          iconSize: 26.0,
+          onPressed: () => print("help"),
         )
       ],
     );
@@ -76,7 +95,8 @@ class IndexPage extends StatelessWidget {
               title: listItems[index],
               onTap: () {
                 print("onTap");
-                Routers.router.navigateTo(context, "/detail/${listItems[index]}");
+                Routers.router
+                    .navigateTo(context, "/detail/${listItems[index]}");
               },
             );
           }),

@@ -26,7 +26,9 @@ class Routers {
     router.define("/detail/:title",
         handler: detailHandler, transitionType: TransitionType.inFromRight);
 
-    router.define("/search", handler: _generatePageHandle(IndexSearchPage()));
+    router.define("/search",
+        handler: _generatePageHandle(IndexSearchPage()),
+        transitionType: TransitionType.inFromRight);
   }
 
   static Handler _generatePageHandle(Widget page) {

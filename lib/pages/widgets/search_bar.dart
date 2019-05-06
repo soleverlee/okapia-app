@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/pages/colors.dart';
+import 'package:okapia_app/themes/icons.dart';
 
 class SearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -26,7 +27,7 @@ class SearchBar extends StatelessWidget {
         style: TextStyle(color: PageColors.white, fontSize: 16.0),
         decoration: InputDecoration(
           prefixIcon: Icon(
-            Icons.search,
+            AliIcon.search,
             color: PageColors.white,
             size: 22.0,
           ),

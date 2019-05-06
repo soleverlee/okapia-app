@@ -4,6 +4,7 @@ import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';
 import 'package:okapia_app/pages/widgets/search_bar.dart';
 import 'package:okapia_app/routers.dart';
+import 'package:okapia_app/themes/icons.dart';
 import 'package:okapia_app/themes/index.dart';
 
 class IndexPage extends StatelessWidget {
@@ -76,7 +77,7 @@ class IndexPage extends StatelessWidget {
       backgroundColor: PageColors.orange1,
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.help_outline),
+          icon: Icon(AliIcon.help),
           iconSize: 26.0,
           onPressed: () => print("help"),
         )

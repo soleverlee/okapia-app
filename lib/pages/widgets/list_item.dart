@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/pages/colors.dart';
+import 'package:okapia_app/themes/icons.dart';
 
 class ListItem extends StatelessWidget {
   final String title;
@@ -28,7 +29,7 @@ class ListItem extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(right: 15.0),
                   child: Icon(
-                    Icons.streetview,
+                    AliIcon.listItem,
                     size: 24.0,
                     color: PageColors.orange1,
                   ),

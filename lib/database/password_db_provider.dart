@@ -41,7 +41,7 @@ class PasswordDBProvider {
   insertPassword(Password newPassword) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return await transaction.insert("User", newPassword.toJson());
+      return await transaction.insert(_tableName, newPassword.toJson());
     });
   }
 
@@ -62,6 +62,15 @@ class PasswordDBProvider {
     }
 
     return passwords;
+  }
+
+  getPasswordsListCount() async {
+    final db = await database;
+    var res = await db.rawQuery("SELECT count(*) as count from $_tableName");
+    if (res.isNotEmpty) {
+      return res[0];
+    }
+    return 0;
   }
 
   updatePassword(Password updatePassword) async {

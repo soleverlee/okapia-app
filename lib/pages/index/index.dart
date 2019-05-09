@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:okapia_app/application.dart';
+import 'package:okapia_app/base/base_bloc.dart';
+import 'package:okapia_app/blocs/password_bloc.dart';
 import 'package:okapia_app/models/password.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
@@ -9,29 +10,50 @@ import 'package:okapia_app/routers.dart';
 import 'package:okapia_app/themes/icons.dart';
 import 'package:okapia_app/themes/index.dart';
 
-class IndexPage extends StatelessWidget {
-  final String title;
+class IndexPageContainer extends StatefulWidget {
+  @override
+  State<IndexPageContainer> createState() => IndexPageContainerState();
+}
 
-  IndexPage({this.title = "Okapia"});
+class IndexPageContainerState extends State<IndexPageContainer> {
+  PasswordBloc passwordBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordBloc = PasswordBloc();
+    passwordBloc.doQueryPasswordList();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      bloc: passwordBloc,
+      child: IndexPage(),
+    );
+  }
+}
+
+class IndexPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var bloc = BlocProvider.of<PasswordBloc>(context);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Column(
-        children: <Widget>[
-          FutureBuilder(
-            future: Application.passwordDBProvider.getPasswordsListCount(),
-            builder: (context, snapshot) {
-              var count = 0;
-              if (snapshot.hasData) {
-                count = snapshot.data['count'] as int;
-              }
-              return ListTitle(title: "我的全部密码 ($count)");
-            },
-          ),
-          buildContainerList(),
-        ],
+      body: StreamBuilder(
+        stream: bloc.passwordsController.stream,
+        initialData: bloc.passwordsController.value,
+        builder: (context, snapshot) {
+          int count = snapshot.data.count;
+          bool isLoaded = snapshot.data.isLoaded;
+          List<Password> list = snapshot.data.list;
+          return Column(
+            children: <Widget>[
+              ListTitle(title: "我的全部密码 ($count)"),
+              buildContainerList(list, isLoaded),
+            ],
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -81,40 +103,37 @@ class IndexPage extends StatelessWidget {
     );
   }
 
-  Widget buildContainerList() {
-    return FutureBuilder<List<Password>>(
-      future: Application.passwordDBProvider.getAllPasswords(),
-      builder: (context, snapshot) {
-        if (snapshot.data != null) {
-          if (snapshot.hasData && snapshot.data.length > 0) {
-            return Expanded(
-              child: ListView.builder(
-                  itemBuilder: (BuildContext context, int index) {
-                    Password password = snapshot.data[index];
-                    return ListItem(
-                      title: password.title,
-                      onTap: () {
-                        Routers.router.navigateTo(
-                            context, "/detail/${password.title}");
-                      },
-                    );
-                  }),
-            );
-          } else {
-            return Container(
-              margin: EdgeInsets.only(top: 150.0),
-              alignment: AlignmentDirectional.center,
-              child: Text("No Results Found"),
-            );
-          }
-        }
-
+  Widget buildContainerList(List<Password> passwordList, bool isLoaded) {
+    if (isLoaded) {
+      if (passwordList.length > 0) {
+        return Expanded(
+          child: ListView.builder(
+            itemCount: passwordList.length,
+            itemBuilder: (BuildContext context, int index) {
+              Password password = passwordList[index];
+              return ListItem(
+                title: password.title,
+                onTap: () {
+                  Routers.router
+                      .navigateTo(context, "/detail/${password.title}");
+                },
+              );
+            },
+          ),
+        );
+      } else {
         return Container(
           margin: EdgeInsets.only(top: 150.0),
           alignment: AlignmentDirectional.center,
-          child: CircularProgressIndicator(),
+          child: Text("No Results Found"),
         );
-      },
-    );
+      }
+    } else {
+      return Container(
+        margin: EdgeInsets.only(top: 150.0),
+        alignment: AlignmentDirectional.center,
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 }

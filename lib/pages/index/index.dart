@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/application.dart';
+import 'package:okapia_app/models/password.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';
@@ -12,28 +14,22 @@ class IndexPage extends StatelessWidget {
 
   IndexPage({this.title = "Okapia"});
 
-  final List<String> listItems = [
-    "支付宝密码",
-    "淘宝账号密码",
-    "建设银行网银",
-    "QQ密码",
-    "支付宝密码",
-    "淘宝账号密码",
-    "建设银行网银",
-    "QQ密码",
-    "支付宝密码",
-    "淘宝账号密码",
-    "建设银行网银",
-    "QQ密码"
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
       body: Column(
         children: <Widget>[
-          ListTitle(title: "我的全部密码 (${listItems.length})"),
+          FutureBuilder(
+            future: Application.passwordDBProvider.getPasswordsListCount(),
+            builder: (context, snapshot) {
+              var count = 0;
+              if (snapshot.hasData) {
+                count = snapshot.data['count'] as int;
+              }
+              return ListTitle(title: "我的全部密码 ($count)");
+            },
+          ),
           buildContainerList(),
         ],
       ),
@@ -85,22 +81,40 @@ class IndexPage extends StatelessWidget {
     );
   }
 
-  Expanded buildContainerList() {
-    return Expanded(
-      child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: listItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListItem(
-              title: listItems[index],
-              onTap: () {
-                print("onTap");
-                Routers.router
-                    .navigateTo(context, "/detail/${listItems[index]}");
-              },
+  Widget buildContainerList() {
+    return FutureBuilder<List<Password>>(
+      future: Application.passwordDBProvider.getAllPasswords(),
+      builder: (context, snapshot) {
+        if (snapshot.data != null) {
+          if (snapshot.hasData && snapshot.data.length > 0) {
+            return Expanded(
+              child: ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    Password password = snapshot.data[index];
+                    return ListItem(
+                      title: password.title,
+                      onTap: () {
+                        Routers.router.navigateTo(
+                            context, "/detail/${password.title}");
+                      },
+                    );
+                  }),
             );
-          }),
+          } else {
+            return Container(
+              margin: EdgeInsets.only(top: 150.0),
+              alignment: AlignmentDirectional.center,
+              child: Text("No Results Found"),
+            );
+          }
+        }
+
+        return Container(
+          margin: EdgeInsets.only(top: 150.0),
+          alignment: AlignmentDirectional.center,
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

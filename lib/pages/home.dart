@@ -16,7 +16,7 @@ class _HomeExPageState extends State<HomePage> {
   var _currentIndex = _initialIndex;
   var _pageController = PageController(initialPage: _initialIndex);
   var _pages = [
-    IndexPage(),
+    IndexPageContainer(),
     DevEmpty(),
     DevPages(),
     DevCountPage(title: "test")

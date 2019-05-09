@@ -5,14 +5,16 @@ import 'package:okapia_app/models/passwords.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PasswordBloc extends BaseBloc {
-
   BehaviorSubject<String> encryptKeyController = BehaviorSubject();
   BehaviorSubject<Passwords> passwordsController = BehaviorSubject();
+  BehaviorSubject<Passwords> searchPageController = BehaviorSubject();
 
   var resourceDb = ResourceDBProvider();
 
   PasswordBloc() {
     passwordsController.value =
+        Passwords(count: 0, list: List(), isLoaded: false);
+    searchPageController.value =
         Passwords(count: 0, list: List(), isLoaded: false);
   }
 
@@ -21,20 +23,22 @@ class PasswordBloc extends BaseBloc {
     passwordsController.value = passwords;
   }
 
-
-  bool checkHashEncryptKey() {
-
+  doQueryPasswordListByTitle(String title) async {
+    Passwords passwords = await Apis.getPasswordListByTitle(title);
+    searchPageController.value = passwords;
   }
+
+  bool checkHashEncryptKey() {}
 
 //  String saveEncryptKey(String encryptKey){
 //    resourceDb.
 //    ResourceDBProvider.database;
 //  }
 
-
   @override
   void dispose() {
     encryptKeyController.close();
     passwordsController.close();
+    searchPageController.close();
   }
 }

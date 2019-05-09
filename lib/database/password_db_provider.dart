@@ -64,6 +64,20 @@ class PasswordDBProvider {
     return passwords;
   }
 
+  Future<List<Password>> getPasswordsByTitle(String title) async {
+    final db = await database;
+    var res = await db.query(
+        _tableName, where: "title like ?", whereArgs: ["%$title%"]);
+    List<Password> passwords = List();
+    if (res.isNotEmpty) {
+      for (var i = 0; i < res.length; i++) {
+        passwords.add(Password.fromJson(res[i]));
+      }
+    }
+
+    return passwords;
+  }
+
   updatePassword(Password updatePassword) async {
     final db = await database;
     await db.transaction((transaction) async {

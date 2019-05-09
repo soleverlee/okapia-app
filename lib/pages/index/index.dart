@@ -37,7 +37,7 @@ class IndexPageContainerState extends State<IndexPageContainer> {
 class IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<PasswordBloc>(context);
+    PasswordBloc bloc = BlocProvider.of<PasswordBloc>(context);
     return Scaffold(
       appBar: buildAppBar(context),
       body: StreamBuilder(

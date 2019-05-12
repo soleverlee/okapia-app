@@ -12,7 +12,7 @@ class MainApp extends StatefulWidget {
   MainApp() {
     Routers.configureRouters();
     Application.passwordDBProvider = new PasswordDBProvider();
-    Application.passwordDBProvider.initDB();
+//    Application.passwordDBProvider.initDB();
   }
 
   @override

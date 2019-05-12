@@ -1,32 +1,21 @@
-import 'dart:io';
 import 'package:okapia_app/models/resource.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'databases.dart';
+
 class ResourceDBProvider {
-  static Database _database;
   static final _tableName = "Resource";
 
-  Future<Database> get database async {
-    if (_database == null) {
-      _database = await initDB();
+  Future<Database> get database => MyDataBase.database;
+
+  Future<void> saveOrUpdate(Resource entity) async{
+    var preRecord = await getResourceByName(entity.name);
+    if (preRecord != null) {
+      preRecord.value = entity.value;
+      await updateResource(preRecord);
+    } else {
+      await insertResource(entity);
     }
-
-    return _database;
-  }
-
-  initDB() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "okapia.db");
-    return await openDatabase(path, version: 1, onCreate: onCreateFunc);
-  }
-
-  void onCreateFunc(Database db, int version) async {
-    await db.execute("CREATE TABLE $_tableName ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "name TEXT, "
-        "value TEXT)");
   }
 
   rawInsertResource(Resource newResource) async {
@@ -49,6 +38,12 @@ class ResourceDBProvider {
     final db = await database;
     var res = await db.query(_tableName, where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? Resource.fromJson(res.first) : Null;
+  }
+
+  Future<Resource> getResourceByName(String name) async {
+    final db = await database;
+    var res = await db.query(_tableName, where: "name = ?", whereArgs: [name]);
+    return res.isNotEmpty ? Resource.fromJson(res.first) : null;
   }
 
   updateResource(Resource updateResource) async {

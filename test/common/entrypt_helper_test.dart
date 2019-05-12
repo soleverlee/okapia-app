@@ -6,8 +6,8 @@ void main() {
     // Build our app and trigger a frame.
     var pwd = "1234567";
     var seed = "7777777777";
-    var pbkdf2Value = EncryptHelper.instance.applyPBKDF2(pwd, seed);
+//    var pbkdf2Value = EncryptHelper.instance.applyPBKDF2(pwd, seed);
 
-    print(pbkdf2Value);
+//    print(pbkdf2Value);
   });
 }

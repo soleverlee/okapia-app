@@ -28,7 +28,7 @@ class _WelcomeState extends State<WelcomeWidget> {
 
   void _stepTo(int index) {
     _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.linear);
+        duration: Duration(milliseconds: 300), curve: Curves.linear);
   }
 
   @override
@@ -68,7 +68,7 @@ class _WelcomeState extends State<WelcomeWidget> {
   Widget _buildTitle(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: WelcomeWidgetStyle.LEFT_MARGIN, top: 90),
+          const EdgeInsets.only(left: WelcomeWidgetStyle.LEFT_MARGIN, top: 70),
       child: Text(_stepTitles[_curStep],
           style: TextStyle(
               color: PageColors.black1,

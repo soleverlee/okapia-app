@@ -3,15 +3,13 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:password/password.dart';
-
 class EncryptHelper{
   static var instance = EncryptHelper();
 
-  var uuid = new Uuid();
+  static var _uuid = new Uuid();
 
   String generateSeed() {
-    return uuid.v4();
+    return _uuid.v4();
   }
 
   ///获取 hash
@@ -23,14 +21,15 @@ class EncryptHelper{
     return hashKey;
   }
 
-  ///获取 Entrypt key
-  String applyPBKDF2(String inputKey, String salt){
-    return Password.hash(inputKey, PBKDF2(
-        salt: salt
-    ));
+  static String applyPBKDF2(String inputKey, String salt){
+    //TODO:
+    return inputKey+ salt;
+//    return Password.hash(inputKey, PBKDF2(
+//        salt: salt
+//    ));
   }
 
-  String applySha256(String content, String seed) {
+  static String applySha256(String content, String seed) {
     var saltBytes= utf8.encode(seed);
     var contentBytes = utf8.encode(content);
 

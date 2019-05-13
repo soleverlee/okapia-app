@@ -1,6 +1,4 @@
 
-
-
 class LogUtils{
   static i(String message){
     print(message);

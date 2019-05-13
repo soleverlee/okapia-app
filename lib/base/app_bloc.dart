@@ -15,7 +15,7 @@ class AppBloc implements BaseBloc {
   }
 
   T find<T extends BaseBloc>() {
-    return blocs.firstWhere((it) => it is T);
+    return blocs.firstWhere((it) => it is T, orElse: () => null);
   }
 
   @override

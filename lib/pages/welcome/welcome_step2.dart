@@ -4,6 +4,7 @@ import 'package:okapia_app/blocs/user_main_pwd_bloc.dart';
 import 'package:okapia_app/common/toast_utils.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/welcome/welcome_widget.dart';
+import 'package:okapia_app/common/password_validator.dart';
 
 class WelcomeStep2 extends StatefulWidget {
   final VoidCallback onNext;
@@ -86,7 +87,7 @@ class _WelcomeStep2State extends State<WelcomeStep2> {
           ),
           Center(
               child: _PasswordText(
-                controller: controller1,
+            controller: controller1,
             onTap: () {
               setState(() {
                 errorMsg1 = null;
@@ -96,7 +97,7 @@ class _WelcomeStep2State extends State<WelcomeStep2> {
             hint: "请输入主密码",
           )),
           _PasswordText(
-            controller: controller2,
+              controller: controller2,
               onTap: () {
                 setState(() {
                   errorMsg2 = null;
@@ -169,15 +170,7 @@ class _PasswordText extends StatelessWidget {
 }
 
 String _checkMainPwdSuitable(String mainPwd) {
-  if (mainPwd == null || mainPwd.isEmpty) {
-    return "密码不能为空";
-  }
-  if (mainPwd.length < 8) {
-    return "密码不能小于8位";
-  }
-  RegExp exp = RegExp("^(?=.*?[0-9])(?=.*?[a-z])[0-9a-z]");
-  if (!exp.hasMatch(mainPwd)) {
-    return "密码需要包含至少数字，大小写字母";
-  }
+  PasswordValidator passwordValidator = new PasswordValidator(mainPwd);
+  if (!passwordValidator.isPasswordStrong()) return passwordValidator.error;
   return null;
 }

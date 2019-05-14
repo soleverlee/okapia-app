@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'databases.dart';
 
 class RecordDBProvider {
-  final String _tableName = "Password";
+  final String _tableName = "Record";
 
   Future<Database> get database => DatabaseClient.database;
 

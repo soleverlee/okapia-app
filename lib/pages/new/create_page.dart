@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:okapia_app/application.dart';
-import 'package:okapia_app/entities/password.dart';
+import 'package:okapia_app/entities/record.dart';
 import 'package:okapia_app/pages/new/password_text_field.dart';
 import 'package:okapia_app/pages/widgets/title_bar.dart';
 import 'package:okapia_app/routers.dart';
@@ -211,8 +211,8 @@ class _CreatePageState extends State<CreatePage> {
   void _save(String title, String catalog, String password) {
     _showLoadingOrNot(true);
 
-    Application.passwordDBProvider
-        .rawInsertPassword(new Password(title: title, content: password))
+    Application.recordDBProvider
+        .rawInsertRecord(new RecordEntity(title: title, content: password))
         .whenComplete(() {
       _showLoadingOrNot(false);
       Routers.router.pop(context);

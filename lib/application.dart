@@ -2,6 +2,6 @@ import 'package:okapia_app/database/record_db_provider.dart';
 
 class Application{
 
-  static RecordDBProvider passwordDBProvider;
+  static RecordDBProvider recordDBProvider;
 
 }

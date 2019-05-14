@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/base/base_bloc.dart';
-import 'package:okapia_app/blocs/password_bloc.dart';
-import 'package:okapia_app/entities/password.dart';
+import 'package:okapia_app/blocs/record_bloc.dart';
+import 'package:okapia_app/entities/record.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';
@@ -16,19 +16,19 @@ class IndexPageContainer extends StatefulWidget {
 }
 
 class IndexPageContainerState extends State<IndexPageContainer> {
-  PasswordBloc passwordBloc;
+  RecordBloc recordBloc;
 
   @override
   void initState() {
     super.initState();
-    passwordBloc = PasswordBloc();
-    passwordBloc.doQueryPasswordList();
+    recordBloc = RecordBloc();
+    recordBloc.doQueryRecordList();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      bloc: passwordBloc,
+      bloc: recordBloc,
       child: IndexPage(),
     );
   }
@@ -37,16 +37,16 @@ class IndexPageContainerState extends State<IndexPageContainer> {
 class IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    PasswordBloc bloc = BlocProvider.of<PasswordBloc>(context);
+    RecordBloc bloc = BlocProvider.of<RecordBloc>(context);
     return Scaffold(
       appBar: buildAppBar(context),
       body: StreamBuilder(
-        stream: bloc.passwordsController.stream,
-        initialData: bloc.passwordsController.value,
+        stream: bloc.recordViewController.stream,
+        initialData: bloc.recordViewController.value,
         builder: (context, snapshot) {
           int count = snapshot.data.count;
           bool isLoaded = snapshot.data.isLoaded;
-          List<Password> list = snapshot.data.list;
+          List<RecordEntity> list = snapshot.data.list;
           return Column(
             children: <Widget>[
               ListTitle(title: "我的全部密码 ($count)"),
@@ -103,14 +103,14 @@ class IndexPage extends StatelessWidget {
     );
   }
 
-  Widget buildContainerList(List<Password> passwordList, bool isLoaded) {
+  Widget buildContainerList(List<RecordEntity> passwordList, bool isLoaded) {
     if (isLoaded) {
       if (passwordList.length > 0) {
         return Expanded(
           child: ListView.builder(
             itemCount: passwordList.length,
             itemBuilder: (BuildContext context, int index) {
-              Password password = passwordList[index];
+              RecordEntity password = passwordList[index];
               return ListItem(
                 title: password.title,
                 onTap: () {

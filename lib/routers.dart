@@ -43,6 +43,9 @@ class Routers {
 
   static void jumpToDevMoviePage(BuildContext context) => Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => DevMoviePageContainer()));
+
+  static void gotoInitializePage(BuildContext context) =>
+      Navigator.of(context).push(MaterialPageRoute(builder: homeBuilder));
 }
 
 var detailHandler = Handler(

@@ -6,7 +6,7 @@ import 'databases.dart';
 class ResourceDBProvider {
   static final _tableName = "Resource";
 
-  Future<Database> get database => MyDataBase.database;
+  Future<Database> get database => DatabaseClient.database;
 
   Future<void> saveOrUpdate(Resource entity) async{
     var preRecord = await getResourceByName(entity.name);

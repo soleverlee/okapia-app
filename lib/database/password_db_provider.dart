@@ -6,10 +6,11 @@ import 'databases.dart';
 class PasswordDBProvider {
   final String _tableName = "Password";
 
-  Future<Database> get database => MyDataBase.database;
+  Future<Database> get database => DatabaseClient.database;
 
   rawInsertPassword(Password newPassword) async {
     final db = await database;
+    // FIXME: db.transaction got null when database if recreated.
     await db.transaction((transaction) async {
       return await transaction
           .rawInsert("INSERT Into $_tableName (title, content) "

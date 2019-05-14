@@ -11,7 +11,7 @@ void main() => runApp(MainApp());
 class MainApp extends StatefulWidget {
   MainApp() {
     Routers.configureRouters();
-    Application.passwordDBProvider = new RecordDBProvider();
+    Application.recordDBProvider = new RecordDBProvider();
 //    Application.passwordDBProvider.initDB();
   }
 

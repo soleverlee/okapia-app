@@ -1,4 +1,4 @@
-import 'package:okapia_app/entities/password.dart';
+import 'package:okapia_app/entities/record.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'databases.dart';
@@ -8,73 +8,73 @@ class RecordDBProvider {
 
   Future<Database> get database => DatabaseClient.database;
 
-  rawInsertPassword(Password newPassword) async {
+  rawInsertRecord(RecordEntity newRecord) async {
     final db = await database;
     // FIXME: db.transaction got null when database if recreated.
     await db.transaction((transaction) async {
       return await transaction
           .rawInsert("INSERT Into $_tableName (title, content) "
-              "VALUES ('${newPassword.title}', '${newPassword.content}')");
+          "VALUES ('${newRecord.title}', '${newRecord.content}')");
     });
   }
 
-  insertPassword(Password newPassword) async {
+  insertRecord(RecordEntity newRecord) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return await transaction.insert(_tableName, newPassword.toJson());
+      return await transaction.insert(_tableName, newRecord.toJson());
     });
   }
 
-  getPasswordById(int id) async {
+  getRecordById(int id) async {
     final db = await database;
     var res = await db.query(_tableName, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? Password.fromJson(res.first) : Null;
+    return res.isNotEmpty ? RecordEntity.fromJson(res.first) : Null;
   }
 
-  Future<List<Password>> getAllPasswords() async {
+  Future<List<RecordEntity>> getAllRecords() async {
     final db = await database;
     var res = await db.query(_tableName);
-    List<Password> passwords = List();
+    List<RecordEntity> records = List();
     if (res.isNotEmpty) {
       for (var i = 0; i < res.length; i++) {
-        passwords.add(Password.fromJson(res[i]));
+        records.add(RecordEntity.fromJson(res[i]));
       }
     }
 
-    return passwords;
+    return records;
   }
 
-  Future<List<Password>> getPasswordsByTitle(String title) async {
+  Future<List<RecordEntity>> getRecordsByTitle(String title) async {
     final db = await database;
     var res = await db.query(
         _tableName, where: "title like ?", whereArgs: ["%$title%"]);
-    List<Password> passwords = List();
+    List<RecordEntity> records = List();
     if (res.isNotEmpty) {
       for (var i = 0; i < res.length; i++) {
-        passwords.add(Password.fromJson(res[i]));
+        records.add(RecordEntity.fromJson(res[i]));
       }
     }
 
-    return passwords;
+    return records;
   }
 
-  updatePassword(Password updatePassword) async {
+  updateRecord(RecordEntity updateRecord) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return transaction.update(_tableName, updatePassword.toJson(),
-          where: "id = ?", whereArgs: [updatePassword.id]);
+      return transaction.update(_tableName, updateRecord.toJson(),
+          where: "id = ?", whereArgs: [updateRecord.id]);
     });
   }
 
-  deletePassword(Password deletePassword) async {
+  deleteRecord(RecordEntity deleteRecord) async {
     final db = await database;
     await db.transaction((transaction) async {
       return transaction
-          .delete(_tableName, where: "id = ?", whereArgs: [deletePassword.id]);
+          .delete(_tableName, where: "id = ?", whereArgs: [deleteRecord.id]);
     });
   }
 
-  deleteAllPasswords() async {
+  deleteAllRecords() async {
     final db = await database;
     await db.transaction((transaction) async {
       transaction.rawDelete("Delete * from $_tableName");

@@ -1,35 +1,40 @@
 import 'dart:io';
-import 'package:okapia_app/models/password.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-
-class MyDataBase{
+class DatabaseClient {
   static Database _database;
 
   static Future<Database> get database async {
     if (_database == null) {
-      _database = await _initDB();
+      await initDb();
     }
 
     return _database;
   }
 
-  static _initDB() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "okapia.db");
-    return await openDatabase(path, version: 1, onCreate: _onCreateFunc);
+  static void initDb() async {
+    final String path = await getDatabasePath();
+    _database = await openDatabase(path, version: 1, onCreate: _initialize);
   }
 
-  static void _onCreateFunc(Database db, int version) async {
-    await db.execute("CREATE TABLE Resource ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "name TEXT, "
-        "value TEXT)");
-    await db.execute("CREATE TABLE Password ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "title TEXT, "
-        "content TEXT)");
+  static Future<String> getDatabasePath() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    return join(documentsDirectory.path, "okapia.db");
+  }
+
+  static void _initialize(Database db, int version) async {
+    final String script = await rootBundle.loadString("assets/config/init.sql");
+    final batch = db.batch();
+    for (final statement in script.split(";")) {
+      final sql = statement.trim();
+      if (sql.isNotEmpty) {
+        print("Executing:" + sql);
+        batch.execute(sql);
+      }
+    }
+    await batch.commit(noResult: true);
   }
 }

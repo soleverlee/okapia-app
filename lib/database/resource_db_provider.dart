@@ -1,4 +1,4 @@
-import 'package:okapia_app/models/resource.dart';
+import 'package:okapia_app/entities/resource.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'databases.dart';

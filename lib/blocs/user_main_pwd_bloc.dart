@@ -3,7 +3,7 @@ import 'package:okapia_app/common/log_utils.dart';
 import 'package:okapia_app/database/db_constant.dart';
 import 'package:okapia_app/database/resource_db_provider.dart';
 import 'package:okapia_app/encrypt/encrypt_helper.dart';
-import 'package:okapia_app/models/resource.dart';
+import 'package:okapia_app/entities/resource.dart';
 import 'package:uuid/uuid.dart';
 
 class UserMainPwdBloc extends BaseBloc {

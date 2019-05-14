@@ -1,7 +1,7 @@
 import 'package:okapia_app/apis/http_api.dart';
 import 'package:okapia_app/application.dart';
 import 'package:okapia_app/developer/movie/dev_movie_models.dart';
-import 'package:okapia_app/models/password.dart';
+import 'package:okapia_app/entities/password.dart';
 import 'package:okapia_app/models/passwords.dart';
 
 class Apis {

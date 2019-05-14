@@ -1,9 +1,9 @@
-import 'package:okapia_app/models/password.dart';
+import 'package:okapia_app/entities/password.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'databases.dart';
 
-class PasswordDBProvider {
+class RecordDBProvider {
   final String _tableName = "Password";
 
   Future<Database> get database => DatabaseClient.database;

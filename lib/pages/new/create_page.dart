@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:okapia_app/application.dart';
-import 'package:okapia_app/models/password.dart';
+import 'package:okapia_app/entities/password.dart';
 import 'package:okapia_app/pages/new/password_text_field.dart';
 import 'package:okapia_app/pages/widgets/title_bar.dart';
 import 'package:okapia_app/routers.dart';

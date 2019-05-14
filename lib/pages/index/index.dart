@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/blocs/password_bloc.dart';
-import 'package:okapia_app/models/password.dart';
+import 'package:okapia_app/entities/password.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';

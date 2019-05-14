@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:okapia_app/models/password.dart';
+import 'package:okapia_app/entities/password.dart';
 
-part 'passwords.g.dart';
+part 'package:okapia_app/models/passwords.g.dart';
 
 @JsonSerializable()
 class Passwords {

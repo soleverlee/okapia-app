@@ -1,7 +1,7 @@
-import 'package:okapia_app/database/password_db_provider.dart';
+import 'package:okapia_app/database/record_db_provider.dart';
 
 class Application{
 
-  static PasswordDBProvider passwordDBProvider;
+  static RecordDBProvider passwordDBProvider;
 
 }

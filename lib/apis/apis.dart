@@ -15,16 +15,16 @@ class Apis {
   }
 
   static Future<RecordView> getRecordList() async {
-    List<RecordEntity> passwordList =
+    List<RecordEntity> recordList =
     await recordDBProvider.getAllRecords();
     return RecordView(
-        count: passwordList.length, list: passwordList, isLoaded: true);
+        count: recordList.length, list: recordList, isLoaded: true);
   }
 
   static Future<RecordView> getRecordListByTitle(String title) async {
-    List<RecordEntity> passwordList =
+    List<RecordEntity> recordList =
     await recordDBProvider.getRecordsByTitle(title);
     return RecordView(
-        count: passwordList.length, list: passwordList, isLoaded: true);
+        count: recordList.length, list: recordList, isLoaded: true);
   }
 }

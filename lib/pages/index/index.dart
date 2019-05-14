@@ -103,19 +103,19 @@ class IndexPage extends StatelessWidget {
     );
   }
 
-  Widget buildContainerList(List<RecordEntity> passwordList, bool isLoaded) {
+  Widget buildContainerList(List<RecordEntity> recordList, bool isLoaded) {
     if (isLoaded) {
-      if (passwordList.length > 0) {
+      if (recordList.length > 0) {
         return Expanded(
           child: ListView.builder(
-            itemCount: passwordList.length,
+            itemCount: recordList.length,
             itemBuilder: (BuildContext context, int index) {
-              RecordEntity password = passwordList[index];
+              RecordEntity record = recordList[index];
               return ListItem(
-                title: password.title,
+                title: record.title,
                 onTap: () {
                   Routers.router
-                      .navigateTo(context, "/detail/${password.title}");
+                      .navigateTo(context, "/detail/${record.title}");
                 },
               );
             },

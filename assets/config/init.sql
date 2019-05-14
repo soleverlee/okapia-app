@@ -3,7 +3,7 @@ CREATE TABLE Resource (
         name TEXT,
         value TEXT);
 
-CREATE TABLE Password (
+CREATE TABLE Record (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
         content TEXT);

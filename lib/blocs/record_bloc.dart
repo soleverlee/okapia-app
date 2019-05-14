@@ -19,13 +19,13 @@ class RecordBloc extends BaseBloc {
   }
 
   doQueryRecordList() async {
-    RecordView passwords = await Apis.getRecordList();
-    recordViewController.value = passwords;
+    RecordView recordView = await Apis.getRecordList();
+    recordViewController.value = recordView;
   }
 
   doQueryRecordListByTitle(String title) async {
-    RecordView passwords = await Apis.getRecordListByTitle(title);
-    searchPageController.value = passwords;
+    RecordView recordView = await Apis.getRecordListByTitle(title);
+    searchPageController.value = recordView;
   }
 
   bool checkHashEncryptKey() {}

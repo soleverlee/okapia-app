@@ -1,11 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:okapia_app/developer/movie/dev_movie_page.dart';
 import 'package:okapia_app/pages/detail/detail_page.dart';
 import 'package:okapia_app/pages/home.dart';
 import 'package:okapia_app/pages/index/search.dart';
 import 'package:okapia_app/pages/new/create_page.dart';
-import 'package:okapia_app/pages/welcome/welcome_widget.dart';
 
 class Routers {
   static var router = Router();
@@ -37,12 +35,8 @@ class Routers {
             page);
   }
 
-  static final homeBuilder =
-      (BuildContext context) => WelcomeWidget(); //HomePage();
+  static final homeBuilder = (BuildContext context) => HomePage(); //HomePage();
 //  static final homeBuilder = (BuildContext context) => HomePage();
-
-  static void jumpToDevMoviePage(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => DevMoviePageContainer()));
 
   static void gotoInitializePage(BuildContext context) =>
       Navigator.of(context).push(MaterialPageRoute(builder: homeBuilder));

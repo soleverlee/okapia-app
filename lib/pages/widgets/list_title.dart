@@ -4,7 +4,9 @@ import 'package:okapia_app/pages/colors.dart';
 class ListTitle extends StatelessWidget {
   final String title;
 
-  ListTitle({@required this.title});
+  ListTitle({
+    @required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {

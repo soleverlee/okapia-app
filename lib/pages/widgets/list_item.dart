@@ -6,7 +6,10 @@ class ListItem extends StatelessWidget {
   final String title;
   final GestureTapCallback onTap;
 
-  ListItem({@required this.title, @required this.onTap});
+  ListItem({
+    @required this.title,
+    @required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

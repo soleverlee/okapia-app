@@ -6,8 +6,11 @@ class LinkButton extends StatelessWidget {
   final GestureTapCallback onTap;
   final EdgeInsetsGeometry padding;
 
-  LinkButton(
-      {@required this.title, @required this.onTap, @required this.padding});
+  LinkButton({
+    @required this.title,
+    @required this.onTap,
+    @required this.padding,
+  });
 
   @override
   Widget build(BuildContext context) {

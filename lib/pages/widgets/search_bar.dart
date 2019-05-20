@@ -10,13 +10,14 @@ class SearchBar extends StatelessWidget {
   final bool autoFocus;
   final EdgeInsetsGeometry margin;
 
-  SearchBar(
-      {this.controller,
-      this.onChanged,
-      this.onSubmitted,
-      this.hintText = "",
-      this.autoFocus = false,
-      this.margin});
+  SearchBar({
+    this.controller,
+    this.onChanged,
+    this.onSubmitted,
+    this.hintText = "",
+    this.autoFocus = false,
+    this.margin,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/base/base_bloc.dart';
+import 'package:okapia_app/blocs/record_bloc.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/link_button.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';
 import 'package:okapia_app/pages/widgets/search_bar.dart';
 import 'package:okapia_app/themes/index.dart';
+
+class IndexSearchPageContainer extends StatefulWidget {
+  @override
+  State<IndexSearchPageContainer> createState() =>
+      IndexSearchPageContainerState();
+}
+
+class IndexSearchPageContainerState extends State<IndexSearchPageContainer> {
+  RecordBloc recordBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    recordBloc = RecordBloc();
+    recordBloc.doQueryRecordList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      bloc: recordBloc,
+      child: IndexSearchPage(),
+    );
+  }
+}
 
 class IndexSearchPage extends StatefulWidget {
   @override
@@ -24,6 +51,7 @@ class IndexSearchState extends State<IndexSearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    RecordBloc recordBloc = BlocProvider.of<RecordBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(

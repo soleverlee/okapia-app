@@ -26,7 +26,7 @@ class Routers {
         handler: detailHandler, transitionType: TransitionType.inFromRight);
 
     router.define("/search",
-        handler: _generatePageHandle(IndexSearchPage()),
+        handler: _generatePageHandle(IndexSearchPageContainer()),
         transitionType: TransitionType.inFromRight);
   }
 

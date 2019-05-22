@@ -40,6 +40,9 @@ class Routers {
 
   static void gotoInitializePage(BuildContext context) =>
       Navigator.of(context).push(MaterialPageRoute(builder: homeBuilder));
+
+  static void gotoHomePage(BuildContext context) => Navigator.of(context)
+      .pushNamedAndRemoveUntil("/home", (Route<dynamic> route) => false);
 }
 
 var detailHandler = Handler(

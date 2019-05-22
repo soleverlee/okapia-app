@@ -6,16 +6,21 @@ class Apis {
   static RecordDBProvider recordDBProvider = RecordDBProvider();
 
   static Future<RecordView> getRecordList() async {
-    List<RecordEntity> recordList =
-    await recordDBProvider.getAllRecords();
+    List<RecordEntity> recordList = await recordDBProvider.getAllRecords();
     return RecordView(
-        count: recordList.length, list: recordList, isLoaded: true);
+      count: recordList.length,
+      list: recordList,
+      isLoaded: true,
+    );
   }
 
   static Future<RecordView> getRecordListByTitle(String title) async {
     List<RecordEntity> recordList =
     await recordDBProvider.getRecordsByTitle(title);
     return RecordView(
-        count: recordList.length, list: recordList, isLoaded: true);
+      count: recordList.length,
+      list: recordList,
+      isLoaded: true,
+    );
   }
 }

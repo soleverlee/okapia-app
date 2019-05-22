@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/blocs/record_bloc.dart';
+import 'package:okapia_app/entities/record.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/link_button.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
 import 'package:okapia_app/pages/widgets/list_title.dart';
 import 'package:okapia_app/pages/widgets/search_bar.dart';
+import 'package:okapia_app/routers.dart';
 import 'package:okapia_app/themes/index.dart';
 
 class IndexSearchPageContainer extends StatefulWidget {
@@ -21,7 +23,6 @@ class _IndexSearchPageContainerState extends State<IndexSearchPageContainer> {
   void initState() {
     super.initState();
     recordBloc = RecordBloc();
-    recordBloc.doQueryRecordList();
   }
 
   @override
@@ -32,8 +33,6 @@ class _IndexSearchPageContainerState extends State<IndexSearchPageContainer> {
     );
   }
 }
-
-
 
 class _IndexSearchPage extends StatefulWidget {
   @override
@@ -53,12 +52,12 @@ class _IndexSearchState extends State<_IndexSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    var bloc = BlocProvider.of<RecordBloc>(context);
+    RecordBloc recordBloc = BlocProvider.of<RecordBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            buildSearchInput(),
+            buildSearchInput(recordBloc),
             GestureDetector(
               child: Text(
                 "取消",
@@ -74,11 +73,13 @@ class _IndexSearchState extends State<_IndexSearchPage> {
         textTheme: Themes.appBarTextTheme,
         automaticallyImplyLeading: false,
       ),
-      body: isSearched ? buildSearchResultList() : buildHistoryContainer(),
+      body: isSearched
+          ? buildSearchResultList(recordBloc)
+          : buildHistoryContainer(),
     );
   }
 
-  Flexible buildSearchInput() {
+  Flexible buildSearchInput(RecordBloc recordBloc) {
     return Flexible(
       child: SearchBar(
         hintText: "请输入关键字查找",
@@ -93,6 +94,7 @@ class _IndexSearchState extends State<_IndexSearchPage> {
         },
         onSubmitted: (value) {
           if (value.length > 0) {
+            recordBloc.doQueryRecordListByTitle(value);
             setState(() {
               isSearched = true;
             });
@@ -102,27 +104,61 @@ class _IndexSearchState extends State<_IndexSearchPage> {
     );
   }
 
-  Column buildSearchResultList() {
-    return Column(
-      children: <Widget>[
-        ListTitle(
-            title: "以下是包含${keywordController.text}的结果 (${listItems.length})"),
-        Expanded(
-          child: ListView.builder(
-              itemCount: listItems.length,
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ListItem(
-                  title: listItems[index],
-                  onTap: () {
-                    print("onTap");
-                  },
-                );
-              }),
-        ),
-      ],
+  StreamBuilder buildSearchResultList(RecordBloc recordBloc) {
+    return StreamBuilder(
+      stream: recordBloc.searchPageController.stream,
+      initialData: recordBloc.searchPageController.value,
+      builder: (context, snapshot) {
+        int count = snapshot.data.count;
+        bool isLoaded = snapshot.data.isLoaded;
+        List<RecordEntity> list = snapshot.data.list;
+        return Column(
+          children: <Widget>[
+            ListTitle(
+              title: "以下是包含${keywordController.text}的结果 ($count)",
+            ),
+            buildContainerList(list, isLoaded),
+          ],
+        );
+      },
     );
+  }
+
+  Widget buildContainerList(List<RecordEntity> recordList, bool isLoaded) {
+    if (isLoaded) {
+      if (recordList.length > 0) {
+        return Expanded(
+          child: ListView.builder(
+            itemCount: recordList.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (BuildContext context, int index) {
+              RecordEntity record = recordList[index];
+              return ListItem(
+                title: record.title,
+                onTap: () {
+                  Routers.router.navigateTo(
+                    context,
+                    "/detail/${record.title}",
+                  );
+                },
+              );
+            },
+          ),
+        );
+      } else {
+        return Container(
+          margin: EdgeInsets.only(top: 150.0),
+          alignment: AlignmentDirectional.center,
+          child: Text("No Results Found"),
+        );
+      }
+    } else {
+      return Container(
+        margin: EdgeInsets.only(top: 150.0),
+        alignment: AlignmentDirectional.center,
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 
   GestureDetector buildHistoryContainer() {

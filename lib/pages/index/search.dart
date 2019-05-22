@@ -11,10 +11,10 @@ import 'package:okapia_app/themes/index.dart';
 class IndexSearchPageContainer extends StatefulWidget {
   @override
   State<IndexSearchPageContainer> createState() =>
-      IndexSearchPageContainerState();
+      _IndexSearchPageContainerState();
 }
 
-class IndexSearchPageContainerState extends State<IndexSearchPageContainer> {
+class _IndexSearchPageContainerState extends State<IndexSearchPageContainer> {
   RecordBloc recordBloc;
 
   @override
@@ -26,19 +26,21 @@ class IndexSearchPageContainerState extends State<IndexSearchPageContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<RecordBloc>(
       bloc: recordBloc,
-      child: IndexSearchPage(),
+      child: _IndexSearchPage(),
     );
   }
 }
 
-class IndexSearchPage extends StatefulWidget {
+
+
+class _IndexSearchPage extends StatefulWidget {
   @override
-  IndexSearchState createState() => IndexSearchState();
+  _IndexSearchState createState() => _IndexSearchState();
 }
 
-class IndexSearchState extends State<IndexSearchPage> {
+class _IndexSearchState extends State<_IndexSearchPage> {
   bool isSearched = false;
   final List<String> listItems = [
     "招商银行信用卡",
@@ -51,7 +53,7 @@ class IndexSearchState extends State<IndexSearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    RecordBloc recordBloc = BlocProvider.of<RecordBloc>(context);
+    var bloc = BlocProvider.of<RecordBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Row(

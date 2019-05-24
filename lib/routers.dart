@@ -6,12 +6,18 @@ import 'package:okapia_app/pages/index/search.dart';
 import 'package:okapia_app/pages/new/create_page.dart';
 import 'package:okapia_app/pages/splash/splash.dart';
 
+import 'pages/welcome/welcome_widget.dart';
+
 class Routers {
   static var router = Router();
 
   static void configureRouters() {
     router.define("/develop",
         handler: _generatePageHandle(CreatePage()),
+        transitionType: TransitionType.inFromRight);
+
+    router.define("/initialize",
+        handler: _generatePageHandle(WelcomeWidget()),
         transitionType: TransitionType.inFromRight);
 
     router.define("/home",
@@ -38,8 +44,8 @@ class Routers {
 
   static final homeBuilder = (BuildContext context) => SplashPage();
 
-  static void gotoInitializePage(BuildContext context) =>
-      Navigator.of(context).push(MaterialPageRoute(builder: homeBuilder));
+  static void gotoInitializePage(BuildContext context) => Navigator.of(context)
+      .pushNamedAndRemoveUntil("/initialize", (Route<dynamic> route) => false);
 
   static void gotoHomePage(BuildContext context) => Navigator.of(context)
       .pushNamedAndRemoveUntil("/home", (Route<dynamic> route) => false);

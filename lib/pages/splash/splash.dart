@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okapia_app/blocs/InitializingBloc.dart';
 import 'package:okapia_app/routers.dart';
 
 class SplashPage extends StatefulWidget {
@@ -7,11 +8,30 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  InitializingBloc initializingBloc = InitializingBloc();
+
+  static const int defaultWaitTime = 2000;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(new Duration(seconds: 1), () {
-      Routers.gotoHomePage(context);
+    Stopwatch stopwatch = new Stopwatch()..start();
+    initializingBloc.checkIsStorageInitialized().then((initialized) {
+      final elapsed = stopwatch.elapsedMilliseconds;
+      int waitTime;
+      if (initialized && elapsed < defaultWaitTime) {
+        waitTime = defaultWaitTime - elapsed;
+      } else {
+        waitTime = 0;
+      }
+
+      Future.delayed(Duration(milliseconds: waitTime > 0 ? waitTime : 0), () {
+        if (initialized) {
+          Routers.gotoHomePage(context);
+        } else {
+          Routers.gotoInitializePage(context);
+        }
+      });
     });
   }
 

@@ -26,11 +26,7 @@ class RecordBloc extends BaseBloc {
   doQueryRecordListByTitle(String title) async {
     searchPageController.value.isLoaded = false;
     RecordView recordView = await Apis.getRecordListByTitle(title);
-    print("recordView");
-    print(recordView);
-    print(searchPageController.value.isLoaded);
     searchPageController.value = recordView;
-    print(searchPageController.value.isLoaded);
   }
 
   bool checkHashEncryptKey() {}

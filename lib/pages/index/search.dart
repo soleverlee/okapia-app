@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/blocs/record_bloc.dart';
 import 'package:okapia_app/entities/record.dart';
+import 'package:okapia_app/models/record_view.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/widgets/link_button.dart';
 import 'package:okapia_app/pages/widgets/list_item.dart';
@@ -41,11 +42,6 @@ class _IndexSearchPage extends StatefulWidget {
 
 class _IndexSearchState extends State<_IndexSearchPage> {
   bool isSearched = false;
-  final List<String> listItems = [
-    "招商银行信用卡",
-    "银行0988",
-    "建设银行网银",
-  ];
 
   final TextEditingController keywordController =
       TextEditingController(text: "");
@@ -75,7 +71,7 @@ class _IndexSearchState extends State<_IndexSearchPage> {
       ),
       body: isSearched
           ? buildSearchResultList(recordBloc)
-          : buildHistoryContainer(),
+          : buildHistoryContainer(recordBloc),
     );
   }
 
@@ -95,6 +91,7 @@ class _IndexSearchState extends State<_IndexSearchPage> {
         onSubmitted: (value) {
           if (value.length > 0) {
             recordBloc.doQueryRecordListByTitle(value);
+            recordBloc.updateHistoryList(value);
             setState(() {
               isSearched = true;
             });
@@ -109,9 +106,10 @@ class _IndexSearchState extends State<_IndexSearchPage> {
       stream: recordBloc.searchPageController.stream,
       initialData: recordBloc.searchPageController.value,
       builder: (context, snapshot) {
-        int count = snapshot.data.count;
-        bool isLoaded = snapshot.data.isLoaded;
-        List<RecordEntity> list = snapshot.data.list;
+        RecordView recordView = snapshot.data.recordView;
+        int count = recordView.count;
+        bool isLoaded = recordView.isLoaded;
+        List<RecordEntity> list = recordView.list;
         return Column(
           children: <Widget>[
             ListTitle(
@@ -161,7 +159,7 @@ class _IndexSearchState extends State<_IndexSearchPage> {
     }
   }
 
-  GestureDetector buildHistoryContainer() {
+  GestureDetector buildHistoryContainer(RecordBloc recordBloc) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -186,39 +184,55 @@ class _IndexSearchState extends State<_IndexSearchPage> {
                 style: TextStyle(color: PageColors.black1, fontSize: 14.0),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(left: 20.0),
-              child: Row(
-                children: <Widget>[
-                  LinkButton(
-                    title: "淘宝",
-                    padding: EdgeInsets.only(top: 10.0, right: 10.0),
-                    onTap: () => print("淘宝"),
-                  ),
-                  LinkButton(
-                    title: "支付宝",
-                    padding:
-                    EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                    onTap: () => print("支付宝"),
-                  ),
-                  LinkButton(
-                    title: "JD",
-                    padding:
-                    EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                    onTap: () => print("JD"),
-                  ),
-                  LinkButton(
-                    title: "t",
-                    padding:
-                    EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                    onTap: () => print("t"),
-                  ),
-                ],
-              ),
-            )
+            generateLinkButtons(recordBloc),
           ],
         ),
       ),
+    );
+  }
+
+  StreamBuilder generateLinkButtons(RecordBloc recordBloc) {
+    return StreamBuilder(
+      stream: recordBloc.searchPageController.stream,
+      initialData: recordBloc.searchPageController.value,
+      builder: (context, snapshot) {
+        List<String> historyList = snapshot.data.historyList;
+        if (historyList.length > 0) {
+          return Container(
+            padding: EdgeInsets.only(left: 20.0),
+            child: Row(
+              children: historyList
+                  .asMap()
+                  .map((index, history) =>
+                  MapEntry(
+                      index,
+                      LinkButton(
+                        title: history,
+                        padding: EdgeInsets.only(
+                            top: 10.0,
+                            left: index == 0 ? 0 : 10.0,
+                            right: 10.0),
+                        onTap: () {
+                          Routers.router.navigateTo(
+                            context,
+                            "/detail/$history",
+                          );
+                        },
+                      )))
+                  .values
+                  .toList(),
+            ),
+          );
+        } else {
+          return Container(
+            padding: EdgeInsets.only(left: 20.0, top: 10.0),
+            child: Text(
+              "No History Yet!!!",
+              style: TextStyle(color: PageColors.orange1),
+            ),
+          );
+        }
+      },
     );
   }
 }

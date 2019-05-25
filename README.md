@@ -24,11 +24,8 @@ class User {
   String name;
 
   SearchView({ this.id, this.name });
-
-  factory SearchView.fromJson(Map<String, dynamic> json) =>
-      _$SearchViewFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SearchViewToJson(this);
+  
+  // ...
 }
 ```
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:okapia_app/blocs/InitializingBloc.dart';
+import 'package:okapia_app/blocs/initializing_bloc.dart';
 import 'package:okapia_app/routers.dart';
 
 class SplashPage extends StatefulWidget {

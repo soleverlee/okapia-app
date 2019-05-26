@@ -8,7 +8,7 @@ class ResourceDBProvider {
 
   Future<Database> get database => DatabaseClient.database;
 
-  Future<void> saveOrUpdate(Resource entity) async{
+  Future<void> saveOrUpdate(Resource entity) async {
     var preRecord = await getResourceByName(entity.name);
     if (preRecord != null) {
       preRecord.value = entity.value;

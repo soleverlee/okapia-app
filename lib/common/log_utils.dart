@@ -1,6 +1,5 @@
-
-class LogUtils{
-  static i(String message){
+class LogUtils {
+  static i(String message) {
     print(message);
   }
 

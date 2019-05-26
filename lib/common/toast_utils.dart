@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ToastUtils{
+class ToastUtils {
   static showToast(BuildContext context, String message) {
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text(message),

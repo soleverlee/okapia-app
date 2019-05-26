@@ -46,8 +46,8 @@ class RecordDBProvider {
 
   Future<List<RecordEntity>> getRecordsByTitle(String title) async {
     final db = await database;
-    var res = await db.query(
-        _tableName, where: "title like ?", whereArgs: ["%$title%"]);
+    var res = await db
+        .query(_tableName, where: "title like ?", whereArgs: ["%$title%"]);
     List<RecordEntity> records = List();
     if (res.isNotEmpty) {
       for (var i = 0; i < res.length; i++) {

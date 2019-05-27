@@ -19,12 +19,9 @@ class _SplashPageState extends State<SplashPage> {
     initializingBloc.checkIsStorageInitialized().then((initialized) {
       final elapsed = stopwatch.elapsedMilliseconds;
       int waitTime;
-      if (initialized && elapsed < defaultWaitTime) {
+      if (elapsed < defaultWaitTime) {
         waitTime = defaultWaitTime - elapsed;
-      } else {
-        waitTime = 0;
       }
-
       Future.delayed(Duration(milliseconds: waitTime > 0 ? waitTime : 0), () {
         if (initialized) {
           Routers.gotoHomePage(context);

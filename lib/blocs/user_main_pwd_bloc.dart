@@ -1,7 +1,9 @@
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/common/log_utils.dart';
+import 'package:okapia_app/database/database_storage.dart';
 import 'package:okapia_app/database/db_constant.dart';
 import 'package:okapia_app/database/resource_db_provider.dart';
+import 'package:okapia_app/database/storage.dart';
 import 'package:okapia_app/encrypt/encrypt_helper.dart';
 import 'package:okapia_app/entities/resource.dart';
 import 'package:uuid/uuid.dart';
@@ -14,6 +16,7 @@ class UserMainPwdBloc extends BaseBloc {
   var resourceDb = ResourceDBProvider();
 
   final _uuid = Uuid();
+  final Storage storage = DatabaseStorage(dbName: "okapia.db");
 
   /// Check if has set main password
   Future<bool> hasSetMainPwd() async {
@@ -40,9 +43,10 @@ class UserMainPwdBloc extends BaseBloc {
   /// Set user main pwd
   Future<bool> setMainPwd(String mainPwd) async {
     try {
-      var hash = await _generateHashByPwd(mainPwd);
-      await _savePwdHash(hash);
-      await _generateEncryptKey(mainPwd);
+      await storage.initialize();
+//      var hash = await _generateHashByPwd(mainPwd);
+//      await _savePwdHash(hash);
+//      await _generateEncryptKey(mainPwd);
       return true;
     } on Exception catch (e) {
       LogUtils.error("${TAG}, setMainPwd pwd failed!", e);
@@ -77,13 +81,13 @@ class UserMainPwdBloc extends BaseBloc {
 
   Future<String> _getPwdHash() async {
     var hashResource =
-    await resourceDb.getResourceByName(RESOURCE_MAIN_PWD_HASH);
+        await resourceDb.getResourceByName(RESOURCE_MAIN_PWD_HASH);
     return hashResource?.value;
   }
 
   Future<String> _fetchSeed1() async {
     var seedResource =
-    await resourceDb.getResourceByName(RESOURCE_MAIN_PWD_SEED1);
+        await resourceDb.getResourceByName(RESOURCE_MAIN_PWD_SEED1);
     if (seedResource == null) {
       seedResource = Resource(name: RESOURCE_MAIN_PWD_SEED1, value: _uuid.v4());
       resourceDb.insertResource(seedResource);
@@ -93,7 +97,7 @@ class UserMainPwdBloc extends BaseBloc {
 
   Future<String> _fetchSeed2() async {
     var seedResource =
-    await resourceDb.getResourceByName(RESOURCE_MAIN_PWD_SEED2);
+        await resourceDb.getResourceByName(RESOURCE_MAIN_PWD_SEED2);
     if (seedResource == null) {
       seedResource = Resource(name: RESOURCE_MAIN_PWD_SEED2, value: _uuid.v4());
       resourceDb.insertResource(seedResource);

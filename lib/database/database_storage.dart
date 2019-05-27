@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:okapia_app/common/log_utils.dart';
 import 'package:okapia_app/database/storage.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -38,17 +39,19 @@ class DatabaseStorage implements Storage {
 
   @override
   Future<bool> initialize() async {
-    // TODO: implement initialize
-    return null;
+    await _openDatabase();
+    return true;
   }
 
   @override
   Future<bool> isInitialized() async {
     final String path = await _getDatabasePath();
+    LogUtils.i("checking file:${path}");
     final File file = File(path);
     if (!file.existsSync()) return false;
     final db = await openDatabase(path, version: 1);
     if (db != null) return true;
+    await db.close();
     return false;
   }
 }

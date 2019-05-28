@@ -1,6 +1,6 @@
 CREATE TABLE Resource (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
+        name TEXT unique,
         value TEXT);
 
 CREATE TABLE Record (

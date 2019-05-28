@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseStorage implements Storage {
+class DatabaseStorage implements Storage<Database> {
   final String dbName;
 
   Database _database;
@@ -53,5 +53,11 @@ class DatabaseStorage implements Storage {
     if (db != null) return true;
     await db.close();
     return false;
+  }
+
+  @override
+  Future<Database> getStorageInstance() async {
+    if (_database == null) throw new Exception("Database not opened");
+    return _database;
   }
 }

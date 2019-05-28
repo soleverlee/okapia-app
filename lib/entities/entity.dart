@@ -1,9 +1,5 @@
-abstract class Entity<T, A extends Entity<T, A>> {
-  String getTable();
-
-  T getId();
+abstract class AutoIdEntity {
+  int id;
 
   Map<String, dynamic> toMap();
-
-  A fromMap(Map<String, dynamic> values);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:okapia_app/application.dart';
+import 'package:okapia_app/blocs/create_record_bloc.dart';
 import 'package:okapia_app/entities/record.dart';
 import 'package:okapia_app/pages/new/password_text_field.dart';
 import 'package:okapia_app/pages/widgets/title_bar.dart';
@@ -21,6 +22,8 @@ class _CreatePageState extends State<CreatePage> {
   var _catalogEditingController = TextEditingController();
   var _passwordEditingController = TextEditingController();
   var _passwordConfirmEditingController = TextEditingController();
+
+  final CreateRecordBloc createRecordBloc = CreateRecordBloc();
 
   @override
   void initState() {}
@@ -198,8 +201,6 @@ class _CreatePageState extends State<CreatePage> {
     var passwordConfirm = _passwordConfirmEditingController.text;
 
     var isSamePassword = password == passwordConfirm;
-    print(
-        ">>>> _clickSaveButtonm; title:$title, catalog:$catalog, password:$password, passwordConfirm:$passwordConfirm, isSamePassword:${isSamePassword}");
     _showPasswordErrorTipsOrNot(!isSamePassword);
     if (!isSamePassword) {
       return;
@@ -211,9 +212,7 @@ class _CreatePageState extends State<CreatePage> {
   void _save(String title, String catalog, String password) {
     _showLoadingOrNot(true);
 
-    Application.recordDBProvider
-        .rawInsertRecord(new RecordEntity(title: title, content: password))
-        .whenComplete(() {
+    createRecordBloc.doCreate(title, password).whenComplete(() {
       _showLoadingOrNot(false);
       Routers.router.pop(context);
     });

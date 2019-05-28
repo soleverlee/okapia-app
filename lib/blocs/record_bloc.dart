@@ -23,7 +23,7 @@ class RecordBloc extends BaseBloc {
     );
   }
 
-  _convertEntitiesToView(List<RecordEntity> recordList){
+  _convertEntitiesToView(List<RecordEntity> recordList) {
     return RecordView(
       count: recordList.length,
       list: recordList,
@@ -53,13 +53,6 @@ class RecordBloc extends BaseBloc {
     }
     searchPageController.value.historyList = historyList;
   }
-
-  bool checkHashEncryptKey() {}
-
-//  String saveEncryptKey(String encryptKey){
-//    resourceDb.
-//    ResourceDBProvider.database;
-//  }
 
   @override
   void dispose() {

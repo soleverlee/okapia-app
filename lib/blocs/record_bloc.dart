@@ -1,5 +1,7 @@
-import 'package:okapia_app/apis/apis.dart';
 import 'package:okapia_app/base/base_bloc.dart';
+import 'package:okapia_app/database/repository.dart';
+import 'package:okapia_app/database/repository_provider.dart';
+import 'package:okapia_app/entities/record.dart';
 import 'package:okapia_app/models/record_view.dart';
 import 'package:okapia_app/models/search_view.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,6 +10,9 @@ class RecordBloc extends BaseBloc {
   BehaviorSubject<String> encryptKeyController = BehaviorSubject();
   BehaviorSubject<RecordView> recordViewController = BehaviorSubject();
   BehaviorSubject<SearchView> searchPageController = BehaviorSubject();
+
+  final RecordRepository recordRepository =
+      RepositoryProvider.getRecordRepository();
 
   RecordBloc() {
     recordViewController.value =
@@ -18,15 +23,23 @@ class RecordBloc extends BaseBloc {
     );
   }
 
+  _convertEntitiesToView(List<RecordEntity> recordList){
+    return RecordView(
+      count: recordList.length,
+      list: recordList,
+      isLoaded: true,
+    );
+  }
+
   doQueryRecordList() async {
-    RecordView recordView = await Apis.getRecordList();
-    recordViewController.value = recordView;
+    List<RecordEntity> recordList = await recordRepository.findAll();
+    recordViewController.value = _convertEntitiesToView(recordList);
   }
 
   doQueryRecordListByTitle(String title) async {
     searchPageController.value.recordView.isLoaded = false;
-    RecordView recordView = await Apis.getRecordListByTitle(title);
-    searchPageController.value.recordView = recordView;
+    List<RecordEntity> recordList = await recordRepository.findByTitle(title);
+    searchPageController.value.recordView = _convertEntitiesToView(recordList);
   }
 
   updateHistoryList(String keyword) async {

@@ -1,9 +1,11 @@
 import 'package:okapia_app/database/storage.dart';
 import 'package:okapia_app/entities/entity.dart';
+import 'package:okapia_app/entities/record.dart';
 import 'package:sqflite/sqflite.dart';
 import 'repository.dart';
 
-typedef T Convertor<T extends AutoIdEntity>(Map<String, dynamic> values);
+typedef Convertor<T extends AutoIdEntity> = T Function(
+    Map<String, dynamic> values);
 
 abstract class DatabaseRepositoryImpl<E extends AutoIdEntity>
     extends Repository<Database, E, int> {
@@ -11,7 +13,7 @@ abstract class DatabaseRepositoryImpl<E extends AutoIdEntity>
   final Convertor convertor;
 
   DatabaseRepositoryImpl(
-      String table, Convertor converter, Storage<Database> storage)
+      String table, Convertor<E> converter, Storage<Database> storage)
       : this.table = table,
         this.convertor = converter,
         super(storage) {}
@@ -36,7 +38,18 @@ abstract class DatabaseRepositoryImpl<E extends AutoIdEntity>
   Future<List<E>> findAll() async {
     final Database db = await storage.getStorageInstance();
     final res = await db.query(table);
-    return res.map((values) => convertor(values)).toList();
+    // must use map<E> ! or you just got List<AutoIdEntity> , not E
+    var result = res.map<E>((values) => convertor(values)).toList();
+    return result;
+  }
+
+  Future<List<E>> findAllByCondition(
+      String where, List<dynamic> whereArgs) async {
+    final Database db = await storage.getStorageInstance();
+    final res = await db.query(table, where: where, whereArgs: whereArgs);
+    // must use map<E> ! or you just got List<AutoIdEntity> , not E
+    var result = res.map<E>((values) => convertor(values)).toList();
+    return result;
   }
 
   @override

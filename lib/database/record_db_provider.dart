@@ -14,21 +14,21 @@ class RecordDBProvider {
     await db.transaction((transaction) async {
       return await transaction
           .rawInsert("INSERT Into $_tableName (title, content) "
-          "VALUES ('${newRecord.title}', '${newRecord.content}')");
+              "VALUES ('${newRecord.title}', '${newRecord.content}')");
     });
   }
 
   insertRecord(RecordEntity newRecord) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return await transaction.insert(_tableName, newRecord.toJson());
+      return await transaction.insert(_tableName, newRecord.toMap());
     });
   }
 
   getRecordById(int id) async {
     final db = await database;
     var res = await db.query(_tableName, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? RecordEntity.fromJson(res.first) : Null;
+    return res.isNotEmpty ? RecordEntity.from(res.first) : Null;
   }
 
   Future<List<RecordEntity>> getAllRecords() async {
@@ -37,7 +37,7 @@ class RecordDBProvider {
     List<RecordEntity> records = List();
     if (res.isNotEmpty) {
       for (var i = 0; i < res.length; i++) {
-        records.add(RecordEntity.fromJson(res[i]));
+        records.add(RecordEntity.from(res[i]));
       }
     }
 
@@ -51,7 +51,7 @@ class RecordDBProvider {
     List<RecordEntity> records = List();
     if (res.isNotEmpty) {
       for (var i = 0; i < res.length; i++) {
-        records.add(RecordEntity.fromJson(res[i]));
+        records.add(RecordEntity.from(res[i]));
       }
     }
 
@@ -61,7 +61,7 @@ class RecordDBProvider {
   updateRecord(RecordEntity updateRecord) async {
     final db = await database;
     await db.transaction((transaction) async {
-      return transaction.update(_tableName, updateRecord.toJson(),
+      return transaction.update(_tableName, updateRecord.toMap(),
           where: "id = ?", whereArgs: [updateRecord.id]);
     });
   }

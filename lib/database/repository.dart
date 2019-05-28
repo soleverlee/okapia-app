@@ -23,6 +23,6 @@ abstract class Repository<T, E, I> {
 }
 
 abstract class ResourceRepository<T>
-    extends Repository<T, ResourceEntity, int> {
+    extends Repository<T, ConfigEntity, int> {
   ResourceRepository(Storage<T> storage) : super(storage);
 }

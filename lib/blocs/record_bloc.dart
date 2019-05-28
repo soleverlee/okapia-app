@@ -1,6 +1,5 @@
 import 'package:okapia_app/apis/apis.dart';
 import 'package:okapia_app/base/base_bloc.dart';
-import 'package:okapia_app/database/resource_db_provider.dart';
 import 'package:okapia_app/models/record_view.dart';
 import 'package:okapia_app/models/search_view.dart';
 import 'package:rxdart/rxdart.dart';
@@ -9,8 +8,6 @@ class RecordBloc extends BaseBloc {
   BehaviorSubject<String> encryptKeyController = BehaviorSubject();
   BehaviorSubject<RecordView> recordViewController = BehaviorSubject();
   BehaviorSubject<SearchView> searchPageController = BehaviorSubject();
-
-  var resourceDb = ResourceDBProvider();
 
   RecordBloc() {
     recordViewController.value =

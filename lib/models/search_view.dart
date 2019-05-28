@@ -1,14 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:okapia_app/models/record_view.dart';
 
-part 'search_view.g.dart';
-
-@JsonSerializable()
 class SearchView {
-  @JsonKey(name: "historyList")
   List<String> historyList;
 
-  @JsonKey(name: "recordView")
   RecordView recordView;
 
   SearchView({
@@ -16,8 +11,16 @@ class SearchView {
     this.recordView,
   });
 
-  factory SearchView.fromJson(Map<String, dynamic> json) =>
-      _$SearchViewFromJson(json);
+  factory SearchView.from(Map<String, dynamic> json) {
+    return SearchView(
+        historyList:
+            (json['historyList'] as List)?.map((e) => e as String)?.toList(),
+        recordView: json['recordView'] == null
+            ? null
+            : RecordView.from(json['recordView'] as Map<String, dynamic>));
+  }
 
-  Map<String, dynamic> toJson() => _$SearchViewToJson(this);
+  Map<String, dynamic> toMap() {
+    return {'historyList': historyList, 'recordView': recordView};
+  }
 }

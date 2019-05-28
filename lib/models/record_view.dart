@@ -1,23 +1,26 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:okapia_app/entities/record.dart';
 
-part 'package:okapia_app/models/record_view.g.dart';
-
-@JsonSerializable()
 class RecordView {
-  @JsonKey(name: "count")
   int count;
 
-  @JsonKey(name: "list")
   List<RecordEntity> list;
 
-  @JsonKey(name: "isLoaded")
   bool isLoaded;
 
   RecordView({this.count, this.list, this.isLoaded});
 
-  factory RecordView.fromJson(Map<String, dynamic> json) =>
-      _$RecordViewFromJson(json);
+  factory RecordView.from(Map<String, dynamic> values) {
+    return RecordView(
+        count: values['count'] as int,
+        list: (values['list'] as List)
+            ?.map((e) =>
+                e == null ? null : RecordEntity.from(e as Map<String, dynamic>))
+            ?.toList(),
+        isLoaded: values['isLoaded'] as bool);
+  }
 
-  Map<String, dynamic> toJson() => _$RecordViewToJson(this);
+  Map<String, dynamic> toMap() {
+    return {'count': count, 'list': list, 'isLoaded': isLoaded};
+  }
 }

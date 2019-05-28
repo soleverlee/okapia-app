@@ -11,14 +11,14 @@ class ResourceRepositoryImpl extends ResourceRepository<Database> {
   ResourceRepositoryImpl(Storage<Database> storage) : super(storage) {}
 
   @override
-  Future<ResourceEntity> create(ResourceEntity item) async {
+  Future<ConfigEntity> create(ConfigEntity item) async {
     final Database db = await storage.getStorageInstance();
     item.id = await db.insert(table, item.toMap());
     return item;
   }
 
   @override
-  Future<int> batchCreate(List<ResourceEntity> items) async {
+  Future<int> batchCreate(List<ConfigEntity> items) async {
     final Database db = await storage.getStorageInstance();
     final batch = db.batch();
     items.forEach((item) => batch.insert(table, item.toMap()));
@@ -27,21 +27,21 @@ class ResourceRepositoryImpl extends ResourceRepository<Database> {
   }
 
   @override
-  Future<List<ResourceEntity>> findAll() async {
+  Future<List<ConfigEntity>> findAll() async {
     final Database db = await storage.getStorageInstance();
     final res = await db.query(table);
-    return res.map((values) => ResourceEntity.fromMap(values)).toList();
+    return res.map((values) => ConfigEntity.from(values)).toList();
   }
 
   @override
-  Future<ResourceEntity> findById(int id) async {
+  Future<ConfigEntity> findById(int id) async {
     final Database db = await storage.getStorageInstance();
     final res = await db.query(table, where: "id = ?", whereArgs: [id]);
-    return res.isNotEmpty ? ResourceEntity.fromMap(res.first) : null;
+    return res.isNotEmpty ? ConfigEntity.from(res.first) : null;
   }
 
   @override
-  Future<ResourceEntity> removeById(int id) async {
+  Future<ConfigEntity> removeById(int id) async {
     final Database db = await storage.getStorageInstance();
     final existing = await findById(id);
     if (existing != null)
@@ -50,7 +50,7 @@ class ResourceRepositoryImpl extends ResourceRepository<Database> {
   }
 
   @override
-  Future<ResourceEntity> update(int id, ResourceEntity item) async {
+  Future<ConfigEntity> update(int id, ConfigEntity item) async {
     final Database db = await storage.getStorageInstance();
     item.id = id;
     int updated =

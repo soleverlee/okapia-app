@@ -1,12 +1,12 @@
-class ResourceEntity {
+class ConfigEntity {
   int id;
   String name;
   String value;
 
-  ResourceEntity({this.id, this.name, this.value}) {}
+  ConfigEntity({this.id, this.name, this.value}) {}
 
-  factory ResourceEntity.fromMap(Map<String, dynamic> values) {
-    return ResourceEntity(
+  factory ConfigEntity.from(Map<String, dynamic> values) {
+    return ConfigEntity(
         id: values["id"] as int,
         name: values['name'] as String,
         value: values['value'] as String);

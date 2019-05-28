@@ -16,7 +16,7 @@ class MetaData {
       this.headerHmac,
       this.dataHmac});
 
-  factory MetaData.from(List<ResourceEntity> values) {
+  factory MetaData.from(List<ConfigEntity> values) {
     Map<String, String> kvs = Map();
     values.forEach((entity) => {kvs[entity.name] = entity.value});
     return MetaData(
@@ -28,14 +28,14 @@ class MetaData {
         dataHmac: kvs["dataHmac"]);
   }
 
-  List<ResourceEntity> toEntities() {
-    return <ResourceEntity>[
-      ResourceEntity(name: "version", value: version),
-      ResourceEntity(name: "transformSeed", value: transformSeed),
-      ResourceEntity(name: "masterSeed", value: masterSeed),
-      ResourceEntity(name: "iv", value: iv),
-      ResourceEntity(name: "headerHmac", value: headerHmac),
-      ResourceEntity(name: "dataHmac", value: dataHmac),
+  List<ConfigEntity> toEntities() {
+    return <ConfigEntity>[
+      ConfigEntity(name: "version", value: version),
+      ConfigEntity(name: "transformSeed", value: transformSeed),
+      ConfigEntity(name: "masterSeed", value: masterSeed),
+      ConfigEntity(name: "iv", value: iv),
+      ConfigEntity(name: "headerHmac", value: headerHmac),
+      ConfigEntity(name: "dataHmac", value: dataHmac),
     ];
   }
 }

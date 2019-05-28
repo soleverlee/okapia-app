@@ -1,11 +1,20 @@
+import 'dart:typed_data';
+
+import 'package:encryptions/encryptions.dart';
+import 'package:encryptions/hex.dart';
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/common/log_utils.dart';
 import 'package:okapia_app/database/database_storage.dart';
 import 'package:okapia_app/database/db_constant.dart';
+import 'package:okapia_app/database/repository.dart';
+import 'package:okapia_app/database/repository_provider.dart';
 import 'package:okapia_app/database/resource_db_provider.dart';
 import 'package:okapia_app/database/storage.dart';
-import 'package:okapia_app/encrypt/encrypt_helper.dart';
+import 'package:okapia_app/models/meta_data.dart';
+import 'package:okapia_app/utils/encrypt_helper.dart';
+import 'package:okapia_app/entities/config.dart';
 import 'package:okapia_app/entities/resource.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
 class UserMainPwdBloc extends BaseBloc {
@@ -16,7 +25,13 @@ class UserMainPwdBloc extends BaseBloc {
   var resourceDb = ResourceDBProvider();
 
   final _uuid = Uuid();
-  final Storage storage = DatabaseStorage(dbName: "okapia.db");
+
+  final Storage<Database> storage;
+  final Repository resourceRepository;
+
+  UserMainPwdBloc()
+      : storage = RepositoryProvider.storage,
+        resourceRepository = RepositoryProvider.getResourceRepository() {}
 
   /// Check if has set main password
   Future<bool> hasSetMainPwd() async {
@@ -44,6 +59,8 @@ class UserMainPwdBloc extends BaseBloc {
   Future<bool> setMainPwd(String mainPwd) async {
     try {
       await storage.initialize();
+      final MetaData meta = EncryptHelper.create();
+      var saved = await resourceRepository.batchCreate(meta.toEntities());
 //      var hash = await _generateHashByPwd(mainPwd);
 //      await _savePwdHash(hash);
 //      await _generateEncryptKey(mainPwd);

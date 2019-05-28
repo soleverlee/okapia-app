@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:okapia_app/models/meta_data.dart';
 import 'package:uuid/uuid.dart';
 
 class EncryptHelper {
@@ -8,8 +9,17 @@ class EncryptHelper {
 
   static var _uuid = new Uuid();
 
-  String generateSeed() {
-    return _uuid.v4();
+  static String generateSeed() {
+    return _uuid.v4().replaceAll("-", "");
+  }
+
+  static MetaData create() {
+    return MetaData(
+      version: "0.0.1",
+      transformSeed: generateSeed(),
+      masterSeed: generateSeed(),
+      iv: generateSeed(),
+    );
   }
 
   ///获取 hash

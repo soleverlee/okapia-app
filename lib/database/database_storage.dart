@@ -58,8 +58,7 @@ class DatabaseStorage implements Storage<Database> {
 
   @override
   Future<Database> getStorageInstance() async {
-    if (_database == null) throw new Exception("Database not opened");
-    print("=>${_database}");
+    if (_database == null) await _openDatabase();
     return _database;
   }
 }

@@ -27,7 +27,7 @@ class UserMainPwdBloc extends BaseBloc {
 
   UserMainPwdBloc()
       : storage = RepositoryProvider.storage,
-        resourceRepository = RepositoryProvider.getResourceRepository() {}
+        resourceRepository = RepositoryProvider.getConfigRepository() {}
 
 
   /// Check if main pwd

@@ -8,7 +8,11 @@ import 'database_storage.dart';
 class RepositoryProvider {
   static Storage<Database> storage = DatabaseStorage(dbName: "okapia.db");
 
-  static ResourceRepository getResourceRepository() {
-    return ResourceRepositoryImpl(storage);
+  static ConfigRepository getConfigRepository() {
+    return ConfigRepositoryImpl(storage);
+  }
+  
+  static RecordRepository getRecordRepository(){
+    return RecordRepositoryImpl(storage);
   }
 }

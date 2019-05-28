@@ -1,4 +1,6 @@
-class RecordEntity {
+import 'entity.dart';
+
+class RecordEntity implements AutoIdEntity {
   int id;
 
   String title;

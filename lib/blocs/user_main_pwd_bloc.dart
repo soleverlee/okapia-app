@@ -57,6 +57,7 @@ class UserMainPwdBloc extends BaseBloc {
 //      await _generateEncryptKey(mainPwd);
       return true;
     } on Exception catch (e) {
+      print(e);
       LogUtils.error("${TAG}, setMainPwd pwd failed!", e);
       return false;
     }

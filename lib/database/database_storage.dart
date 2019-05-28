@@ -52,12 +52,14 @@ class DatabaseStorage implements Storage<Database> {
     final db = await openDatabase(path, version: 1);
     if (db != null) return true;
     await db.close();
+    _database = null;
     return false;
   }
 
   @override
   Future<Database> getStorageInstance() async {
     if (_database == null) throw new Exception("Database not opened");
+    print("=>${_database}");
     return _database;
   }
 }

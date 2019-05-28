@@ -1,4 +1,6 @@
-class ConfigEntity {
+import 'entity.dart';
+
+class ConfigEntity implements AutoIdEntity{
   int id;
   String name;
   String value;

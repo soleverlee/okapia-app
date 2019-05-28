@@ -1,6 +1,5 @@
 import 'package:okapia_app/database/storage.dart';
 import 'package:okapia_app/entities/config.dart';
-import 'package:sqflite/sqflite.dart';
 
 abstract class Repository<T, E, I> {
   Storage<T> storage;
@@ -22,7 +21,6 @@ abstract class Repository<T, E, I> {
   Future<E> removeById(I id);
 }
 
-abstract class ResourceRepository<T>
-    extends Repository<T, ConfigEntity, int> {
+abstract class ResourceRepository<T> extends Repository<T, ConfigEntity, int> {
   ResourceRepository(Storage<T> storage) : super(storage);
 }

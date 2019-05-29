@@ -2,9 +2,6 @@ import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/database/repository.dart';
 import 'package:okapia_app/database/repository_provider.dart';
 import 'package:okapia_app/entities/record.dart';
-import 'package:okapia_app/models/record_view.dart';
-import 'package:okapia_app/models/search_view.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CreateRecordBloc extends BaseBloc {
   final RecordRepository recordRepository =

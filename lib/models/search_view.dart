@@ -1,4 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:okapia_app/models/record_view.dart';
 
 class SearchView {

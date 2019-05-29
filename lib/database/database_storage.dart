@@ -37,6 +37,15 @@ class DatabaseStorage implements Storage<Database> {
     await batch.commit(noResult: true);
   }
 
+  Future<bool> _destroyDatabase() async {
+    final String path = await _getDatabasePath();
+    print('Removing file:' + path);
+    final File file = new File(path);
+    if (await file.exists()) await file.delete();
+    print('Deleted.');
+    return true;
+  }
+
   @override
   Future<bool> initialize() async {
     await _openDatabase();
@@ -60,5 +69,10 @@ class DatabaseStorage implements Storage<Database> {
   Future<Database> getStorageInstance() async {
     if (_database == null) await _openDatabase();
     return _database;
+  }
+
+  @override
+  Future<bool> destroy() async {
+    return await _destroyDatabase();
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:okapia_app/application.dart';
 import 'package:okapia_app/base/app_bloc.dart';
 import 'package:okapia_app/base/base_bloc.dart';
-import 'package:okapia_app/database/record_db_provider.dart';
 import 'package:okapia_app/routers.dart';
 import 'package:okapia_app/themes/index.dart';
 
@@ -11,8 +9,6 @@ void main() => runApp(MainApp());
 class MainApp extends StatefulWidget {
   MainApp() {
     Routers.configureRouters();
-    Application.recordDBProvider = new RecordDBProvider();
-//    Application.recordDBProvider.initDB();
   }
 
   @override

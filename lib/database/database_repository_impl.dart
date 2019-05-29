@@ -1,6 +1,5 @@
 import 'package:okapia_app/database/storage.dart';
 import 'package:okapia_app/entities/entity.dart';
-import 'package:okapia_app/entities/record.dart';
 import 'package:sqflite/sqflite.dart';
 import 'repository.dart';
 

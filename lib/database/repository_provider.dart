@@ -11,8 +11,8 @@ class RepositoryProvider {
   static ConfigRepository getConfigRepository() {
     return ConfigRepositoryImpl(storage);
   }
-  
-  static RecordRepository getRecordRepository(){
+
+  static RecordRepository getRecordRepository() {
     return RecordRepositoryImpl(storage);
   }
 }

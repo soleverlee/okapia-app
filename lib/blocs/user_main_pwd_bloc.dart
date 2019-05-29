@@ -1,4 +1,3 @@
-
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/common/log_utils.dart';
 import 'package:okapia_app/database/repository.dart';
@@ -22,7 +21,6 @@ class UserMainPwdBloc extends BaseBloc {
   UserMainPwdBloc()
       : storage = RepositoryProvider.storage,
         resourceRepository = RepositoryProvider.getConfigRepository() {}
-
 
   /// Check if main pwd
   Future<bool> checkMainPwd(String mainPwd) async {
@@ -58,7 +56,6 @@ class UserMainPwdBloc extends BaseBloc {
   }
 
   String getEncryptKey() => _encryptKey;
-
 
   @override
   void dispose() {}

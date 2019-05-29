@@ -3,5 +3,7 @@ abstract class Storage<T> {
 
   Future<bool> initialize();
 
+  Future<bool> destroy();
+
   Future<T> getStorageInstance();
 }

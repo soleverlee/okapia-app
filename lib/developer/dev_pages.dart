@@ -1,8 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:okapia_app/database/databases.dart';
+import 'package:okapia_app/database/repository_provider.dart';
+import 'package:okapia_app/database/storage.dart';
 import 'package:okapia_app/routers.dart';
+import 'package:sqflite/sqflite.dart';
 
 class NotImplementedPage extends StatelessWidget {
   @override
@@ -13,8 +13,10 @@ class NotImplementedPage extends StatelessWidget {
 
 class DebugTools extends StatelessWidget {
   final String title;
+  final Storage<Database> storage;
 
-  DebugTools({this.title = "Developer Tools"});
+  DebugTools({this.title = "Developer Tools"})
+      : storage = RepositoryProvider.storage;
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +56,6 @@ class DebugTools extends StatelessWidget {
   }
 
   void _onDeleteDb() async {
-    final String path = await DatabaseClient.getDatabasePath();
-    print('Removing file:' + path);
-    final File file = new File(path);
-    if (await file.exists()) await file.delete();
-    print('Deleted.');
-    await DatabaseClient.initDb();
+    storage.destroy();
   }
 }

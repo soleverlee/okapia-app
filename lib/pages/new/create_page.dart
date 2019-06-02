@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:okapia_app/blocs/create_record_bloc.dart';
+import 'package:okapia_app/base/base_bloc.dart';
+import 'package:okapia_app/blocs/user_pwd_bloc.dart';
 import 'package:okapia_app/pages/new/password_text_field.dart';
 import 'package:okapia_app/pages/widgets/title_bar.dart';
 import 'package:okapia_app/routers.dart';
+
+import '../colors.dart';
+import 'create_bloc.dart';
 
 const edgeHorizontal = 16.0;
 const colorWarningText = Color(0xFFE51C23);
@@ -14,92 +19,95 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> {
+  CreatePageBloc createPageBloc = CreatePageBloc();
+
   var _shouldShowErrorTips = false;
-  var _sholdShowLoading = false;
+  var _shouldShowLoading = false;
   var _titleEditingController = TextEditingController();
   var _catalogEditingController = TextEditingController();
   var _passwordEditingController = TextEditingController();
   var _passwordConfirmEditingController = TextEditingController();
 
   final CreateRecordBloc createRecordBloc = CreateRecordBloc();
+  UserPwdBloc _userPwdBloc;
 
   @override
   void initState() {}
 
   @override
   Widget build(BuildContext context) {
+    var bloc = createPageBloc;
+    _userPwdBloc = BlocProvider.of<UserPwdBloc>(context);
     return Scaffold(
-      appBar: TitleBar(
-        title: Text(
-          "创建新密码",
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Routers.router.pop(context);
-            }),
-      ),
-      body: Container(
-        color: Color(0xFFF4F4F4),
-        constraints: BoxConstraints.expand(),
-        child: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                _buildInputContent(),
-                Offstage(
-                  offstage: !_shouldShowErrorTips,
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(
-                        edgeHorizontal, 10, edgeHorizontal, 0),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "两次输入的密码信息不一致",
-                      style: TextStyle(color: colorWarningText),
+        appBar: _buildAppBar(context),
+        body: Container(
+          color: Color(0xFFF4F4F4),
+          constraints: BoxConstraints.expand(),
+          child: Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  _buildInputContent(),
+                  Offstage(
+                    offstage: !_shouldShowErrorTips,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(
+                          edgeHorizontal, 10, edgeHorizontal, 0),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "两次输入的密码信息不一致",
+                        style: TextStyle(color: colorWarningText),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 60,
+                height: 40,
+                left: 40,
+                right: 40,
+                child: FlatButton(
+                  onPressed: _clickSaveButton,
+                  textColor: Colors.white,
+                  child: Text("保存密码"),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  color: PageColors.orange1,
+                  highlightColor: PageColors.orange2,
+                ),
+              ),
+              Offstage(
+                offstage: !_shouldShowLoading,
+                child: Container(
+                  color: Color(0x99ffffff),
+                  constraints: BoxConstraints.expand(),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        CircularProgressIndicator(),
+                        SizedBox(height: 30),
+                        Text("正在保存中...")
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-            Positioned(
-              bottom: 60,
-              height: 40,
-              left: 40,
-              right: 40,
-              child: FlatButton(
-                onPressed: _clickSaveButton,
-                textColor: Colors.white,
-                child: Text("保存密码"),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                color: Colors.green,
-                highlightColor: Colors.green[900],
               ),
-            ),
-            Offstage(
-              offstage: !_sholdShowLoading,
-              child: Container(
-                color: Color(0x99ffffff),
-                constraints: BoxConstraints.expand(),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      CircularProgressIndicator(),
-                      SizedBox(height: 30),
-                      Text("正在保存中...")
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        ));
+  }
+
+  TitleBar _buildAppBar(BuildContext context) {
+    return TitleBar(
+      titleString: "创建新密码",
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          color: Colors.white,
+          onPressed: () {
+            Routers.router.pop(context);
+          }),
     );
   }
 
@@ -211,6 +219,10 @@ class _CreatePageState extends State<CreatePage> {
     _showLoadingOrNot(true);
 
     createRecordBloc.doCreate(title, password).whenComplete(() {
+//    _userPwdBloc.savePwd(title, password)
+//    Application.recordDBProvider
+//        .rawInsertRecord(new RecordEntity(title: title, content: password))
+//        .whenComplete(() {
       _showLoadingOrNot(false);
       Routers.router.pop(context);
     });
@@ -224,7 +236,7 @@ class _CreatePageState extends State<CreatePage> {
 
   void _showLoadingOrNot(bool show) {
     setState(() {
-      _sholdShowLoading = show;
+      _shouldShowLoading = show;
     });
   }
 

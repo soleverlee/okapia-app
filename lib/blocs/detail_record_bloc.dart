@@ -3,19 +3,16 @@ import 'package:okapia_app/database/repository.dart';
 import 'package:okapia_app/database/repository_provider.dart';
 import 'package:okapia_app/entities/record.dart';
 
-class UserPwdBloc extends BaseBloc {
+class DetailRecordBloc extends BaseBloc {
   final RecordRepository recordRepository =
       RepositoryProvider.getRecordRepository();
-
-  Future savePwd(String title, String password) async {
-    return await recordRepository
-        .create(new RecordEntity(title: title, content: password));
-  }
 
   Future<RecordEntity> getRecordById(int id) async {
     return recordRepository.findById(id);
   }
 
   @override
-  void dispose() {}
+  void dispose() {
+    // TODO: implement dispose
+  }
 }

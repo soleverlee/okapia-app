@@ -57,5 +57,6 @@ var detailHandler = Handler(
   String id = params["id"]?.first;
   return DetailPage(
     title: title,
+    id: id,
   );
 });

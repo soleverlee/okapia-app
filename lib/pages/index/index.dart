@@ -115,7 +115,7 @@ class IndexPage extends StatelessWidget {
                 title: record.title,
                 onTap: () {
                   Routers.router
-                      .navigateTo(context, "/detail/${record.title}");
+                      .navigateTo(context, "/detail/${record.title}/${record.id}");
                 },
               );
             },

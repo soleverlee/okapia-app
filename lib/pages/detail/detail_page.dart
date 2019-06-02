@@ -7,8 +7,10 @@ import 'package:okapia_app/routers.dart';
 
 class DetailPage extends StatefulWidget {
   final String title;
+  final String id;
 
-  const DetailPage({Key key, @required this.title}) : super(key: key);
+  const DetailPage({Key key, @required this.title, @required this.id})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -97,7 +99,7 @@ class _DetailPageState extends State<DetailPage> {
 
   Widget _buildTitleBar(BuildContext context) {
     return TitleBar(
-      title: Text("查看密码"),
+      titleString: "查看密码",
       leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {

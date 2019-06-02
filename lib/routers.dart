@@ -28,7 +28,7 @@ class Routers {
         handler: _generatePageHandle(CreatePage()),
         transitionType: TransitionType.inFromRight);
 
-    router.define("/detail/:title",
+    router.define("/detail/:title/:id",
         handler: detailHandler, transitionType: TransitionType.inFromRight);
 
     router.define("/search",
@@ -54,6 +54,7 @@ class Routers {
 var detailHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   String title = params["title"]?.first;
+  String id = params["id"]?.first;
   return DetailPage(
     title: title,
   );

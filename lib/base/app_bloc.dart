@@ -1,11 +1,12 @@
 import 'package:okapia_app/base/base_bloc.dart';
 import 'package:okapia_app/blocs/user_main_pwd_bloc.dart';
+import 'package:okapia_app/blocs/user_pwd_bloc.dart';
 import 'package:okapia_app/blocs/user_setting_bloc.dart';
 
 /// 存放一些全局存储的数据
 
 class AppBloc implements BaseBloc {
-  List<BaseBloc> blocs = [UserMainPwdBloc(), UserSettingBloc()];
+  List<BaseBloc> blocs = [UserMainPwdBloc(), UserSettingBloc() , UserPwdBloc()];
 
   AppBloc() {
     /// 初始化工作

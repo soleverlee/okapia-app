@@ -18,20 +18,25 @@ class UserMainPwdBloc extends BaseBloc {
   final Storage<Database> storage;
   final Repository resourceRepository;
 
+  ///TODO: use db later
+  String _mainPwd;
+
   UserMainPwdBloc()
       : storage = RepositoryProvider.storage,
-        resourceRepository = RepositoryProvider.getConfigRepository() {}
+        resourceRepository = RepositoryProvider.getConfigRepository();
 
   /// Check if main pwd
   Future<bool> checkMainPwd(String mainPwd) async {
     try {
+      ///TODO: fix later
+      return mainPwd == _mainPwd;
 //      var hash = await _generateHashByPwd(mainPwd);
 //      var storedHash = await _getPwdHash();
 //      if (storedHash != null && storedHash.isNotEmpty && hash == storedHash) {
 //        //await _generateEncryptKey(mainPwd);
 //        return true;
 //      }
-      return false;
+//      return false;
     } catch (e) {
       LogUtils.error("${TAG}, Get main pwd failed!", e);
       return false;
@@ -41,19 +46,32 @@ class UserMainPwdBloc extends BaseBloc {
   /// Set user main pwd
   Future<bool> setMainPwd(String mainPwd) async {
     try {
-      await storage.initialize();
-      final MetaData meta = EncryptHelper.create();
-      var saved = await resourceRepository.batchCreate(meta.toEntities());
+      ///TODO: fix later
+      _mainPwd = mainPwd;
+      return true;
+
+//      await storage.initialize();
+//      final MetaData meta = EncryptHelper.create();
+//      var saved = await resourceRepository.batchCreate(meta.toEntities());
 //      var hash = await _generateHashByPwd(mainPwd);
 //      await _savePwdHash(hash);
 //      await _generateEncryptKey(mainPwd);
-      return true;
+//      return true;
     } on Exception catch (e) {
       print(e);
       LogUtils.error("${TAG}, setMainPwd pwd failed!", e);
       return false;
     }
   }
+
+  Future<bool> hasMainPwd() async {
+    return _mainPwd != null;
+  }
+
+  Future<void> clearMainPwd() async {
+    _mainPwd = null;
+  }
+
 
   String getEncryptKey() => _encryptKey;
 

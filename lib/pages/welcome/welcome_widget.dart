@@ -44,7 +44,7 @@ class _WelcomeState extends State<WelcomeWidget> {
       ),
       WelcomeStep3(
         onBefore: ()=>_stepTo(1),
-        onNext: () => Routers.router.navigateTo(context, "/home"),
+        onNext: () => Routers.gotoHomePage(context),
       )
     ];
   }

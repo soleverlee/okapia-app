@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:okapia_app/pages/colors.dart';
 import 'package:okapia_app/pages/welcome/welcome_widget.dart';
 
-
-class WelcomeStep1 extends StatelessWidget{
+class WelcomeStep1 extends StatelessWidget {
   final VoidCallback onNext;
 
   const WelcomeStep1({Key key, this.onNext}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: WelcomeWidgetStyle.LEFT_MARGIN, right: WelcomeWidgetStyle.RIGHT_MARGIN),
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(
+          left: WelcomeWidgetStyle.LEFT_MARGIN,
+          right: WelcomeWidgetStyle.RIGHT_MARGIN),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -28,32 +30,28 @@ class WelcomeStep1 extends StatelessWidget{
             ),
           ),
           Text("在开始使用之前，您需要完成一些必要的设置。", style: WelcomeWidgetStyle.SubTextStyle),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: WelcomeWidgetStyle.BOTTOM_MARGIN),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    height: 1,
-                    color: Colors.grey,
+          Padding(
+            padding: const EdgeInsets.only(top: 50, bottom: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  height: 1,
+                  color: Colors.grey,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 18),
+                  child: GestureDetector(
+                    onTap: onNext,
+                    child:
+                        Text("开始设置", style: WelcomeWidgetStyle.OriginTextStyle),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18),
-                    child: GestureDetector(
-                      onTap: onNext,
-                      child: Text("开始设置",
-                          style: WelcomeWidgetStyle.OriginTextStyle),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         ],
       ),
     );
   }
-
 }

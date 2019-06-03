@@ -11,7 +11,8 @@ class WelcomeStep3 extends StatelessWidget {
   const WelcomeStep3({Key key, this.onNext, this.onBefore}) : super(key: key);
 
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       padding: const EdgeInsets.only(
           left: WelcomeWidgetStyle.LEFT_MARGIN,
           right: WelcomeWidgetStyle.RIGHT_MARGIN),
@@ -52,26 +53,25 @@ class WelcomeStep3 extends StatelessWidget {
           Divider(
             height: 1,
           ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: WelcomeWidgetStyle.BOTTOM_MARGIN),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    GestureDetector(
-                        onTap: onBefore,
-                        child: Text("上一步", style:WelcomeWidgetStyle.OriginTextStyle)),
-                    GestureDetector(
-                      onTap: onNext,
-                      child: Text(
-                        "开始使用",
-                        style: WelcomeWidgetStyle.OriginTextStyle,
-                      ),
-                    )
-                  ],
-                ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 60,
+                  bottom: WelcomeWidgetStyle.BOTTOM_MARGIN),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: onBefore,
+                      child: Text("上一步", style:WelcomeWidgetStyle.OriginTextStyle)),
+                  GestureDetector(
+                    onTap: onNext,
+                    child: Text(
+                      "开始使用",
+                      style: WelcomeWidgetStyle.OriginTextStyle,
+                    ),
+                  )
+                ],
               ),
             ),
           )

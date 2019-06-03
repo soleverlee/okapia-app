@@ -51,18 +51,26 @@ class _WelcomeState extends State<WelcomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Container(
-      color: PageColors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildTitle(context),
-          _buildLines(context),
-          Expanded(child: _buildSteps(context))
-        ],
-      ),
-    ));
+    return WillPopScope(
+      child: Scaffold(
+          body: Container(
+        color: PageColors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildTitle(context),
+            _buildLines(context),
+            Expanded(child: _buildSteps(context))
+          ],
+        ),
+      )),
+      onWillPop: (){
+        if (_curStep == 0) {
+          return Future.value(true);
+        }
+        _stepTo(_curStep-1);
+      },
+    );
   }
 
   Widget _buildTitle(BuildContext context) {

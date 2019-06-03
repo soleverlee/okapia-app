@@ -52,7 +52,7 @@ class DebugTools extends StatelessWidget {
   }
 
   void _onReInitialize(BuildContext context) async {
-    Routers.gotoInitializePage(context);
+    Routers.gotoWelcome(context);
   }
 
   void _onDeleteDb() async {

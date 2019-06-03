@@ -6,7 +6,9 @@ import 'package:okapia_app/pages/index/search.dart';
 import 'package:okapia_app/pages/new/create_page.dart';
 import 'package:okapia_app/pages/splash/splash.dart';
 
+import 'developer/dev_pages.dart';
 import 'pages/welcome/welcome_widget.dart';
+import 'pages/unlock/pwd_unlock_widget.dart';
 
 class Routers {
   static var router = Router();
@@ -14,10 +16,6 @@ class Routers {
   static void configureRouters() {
     router.define("/develop",
         handler: _generatePageHandle(CreatePage()),
-        transitionType: TransitionType.inFromRight);
-
-    router.define("/initialize",
-        handler: _generatePageHandle(WelcomeWidget()),
         transitionType: TransitionType.inFromRight);
 
     router.define("/home",
@@ -34,6 +32,18 @@ class Routers {
     router.define("/search",
         handler: _generatePageHandle(IndexSearchPageContainer()),
         transitionType: TransitionType.inFromRight);
+
+    router.define("/debug",
+        handler: _generatePageHandle(DebugTools()),
+        transitionType: TransitionType.inFromRight);
+
+    router.define("/unlock",
+        handler: _generatePageHandle(PwdUnlockWidget()),
+        transitionType: TransitionType.inFromRight);
+
+    router.define("/welcome",
+        handler: _generatePageHandle(WelcomeWidget()),
+        transitionType: TransitionType.inFromRight);
   }
 
   static Handler _generatePageHandle(Widget page) {
@@ -44,11 +54,16 @@ class Routers {
 
   static final homeBuilder = (BuildContext context) => SplashPage();
 
-  static void gotoInitializePage(BuildContext context) => Navigator.of(context)
-      .pushNamedAndRemoveUntil("/initialize", (Route<dynamic> route) => false);
-
   static void gotoHomePage(BuildContext context) => Navigator.of(context)
       .pushNamedAndRemoveUntil("/home", (Route<dynamic> route) => false);
+
+  static void gotoDebug(BuildContext context) => Routers.router.navigateTo(context, "/debug");
+
+  static void gotoUnlock(BuildContext context) => Navigator.of(context)
+      .pushNamedAndRemoveUntil("/unlock", (Route<dynamic> route) => false);
+
+  static void gotoWelcome(BuildContext context) => Navigator.of(context)
+      .pushNamedAndRemoveUntil("/welcome", (Route<dynamic> route) => false);
 }
 
 var detailHandler = Handler(

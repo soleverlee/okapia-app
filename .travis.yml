@@ -26,10 +26,9 @@ before_script:
   - unzip -qq gradle-3.5-bin.zip
   - export GRADLE_HOME=$PWD/gradle-3.5
   - export PATH=$GRADLE_HOME/bin:$PATH
-  - wget https://github.com/flutter/flutter/archive/v1.7.11.tar.gz
-  - tar -zxvf v1.7.11.tar.gz
+  - git clone -b stable https://github.com/flutter/flutter.git
 script:
-  - ./flutter-1.7.11/bin/flutter -v build apk
+  - ./flutter/bin/flutter -v build apk
 
 cache:
   directories:

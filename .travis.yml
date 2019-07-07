@@ -31,6 +31,13 @@ before_script:
   - export GRADLE_HOME=$PWD/gradle-3.5
   - export PATH=$GRADLE_HOME/bin:$PATH
   - git clone -b stable https://github.com/flutter/flutter.git
+  - wget https://dl.google.com/android/repository/android-ndk-r20-linux-x86_64.zip
+  - unzip -qq android-ndk-r20-linux-x86_64.zip
+  - export ANDROID_NDK_HOME=`pwd`/android-ndk-r20
+  - export LOCAL_ANDROID_NDK_HOME="$ANDROID_NDK_HOME"
+  - export LOCAL_ANDROID_NDK_HOST_PLATFORM="linux-x86_64"
+  - export PATH=$PATH:${ANDROID_NDK_HOME}
+  - env
 script:
   - ./flutter/bin/flutter -v build apk
 

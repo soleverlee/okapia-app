@@ -1,9 +1,6 @@
 os: linux
 language: android
-licenses:
-  - 'android-sdk-preview-license-.+'
-  - 'android-sdk-license-.+'
-  - 'google-gdk-license-.+'
+
 android:
   components:
     - tools
@@ -14,6 +11,12 @@ android:
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-google-android-support
+licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+before_install:
+  - yes | sdkmanager "platforms;android-28"
 jdk: oraclejdk8
 sudo: false
 addons:

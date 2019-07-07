@@ -12,9 +12,7 @@ android:
     - extra-google-m2repository
     - extra-google-android-support
   licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
+    - '.+'
 jdk: oraclejdk8
 sudo: false
 addons:

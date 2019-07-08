@@ -41,7 +41,7 @@ before_script:
   - ./flutter/bin/flutter precache
   - yes | ./flutter/bin/flutter doctor --android-licenses
 script:
-  - ./flutter/bin/flutter -v build apk
+  - ./flutter/bin/flutter -v build apk --flavor dev
 
 cache:
   directories:

@@ -1,6 +1,7 @@
 os: linux
 language: android
-
+jdk: oraclejdk8
+sudo: true
 android:
   components:
     - tools
@@ -13,8 +14,6 @@ android:
     - extra-google-android-support
   licenses:
     - '.+'
-jdk: oraclejdk8
-sudo: false
 addons:
   apt:
     # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18

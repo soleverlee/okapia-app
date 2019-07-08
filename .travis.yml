@@ -1,5 +1,6 @@
 os: linux
 language: android
+dist: trusty
 jdk: oraclejdk8
 sudo: true
 android:
@@ -13,7 +14,9 @@ android:
     - extra-google-m2repository
     - extra-google-android-support
   licenses:
-    - '.+'
+    - android-sdk-preview-license-.+
+    - android-sdk-license-.+
+    - google-gdk-license-.+
 addons:
   apt:
     # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
@@ -22,6 +25,8 @@ addons:
     packages:
       - libstdc++6
       - fonts-droid
+before_install:
+  - yes | sdkmanager --update # key row
 install:
   - echo y | sdkmanager "ndk-bundle"
   - echo y | sdkmanager "cmake;3.6.4111459"
@@ -32,6 +37,9 @@ before_script:
   - export GRADLE_HOME=$PWD/gradle-3.5
   - export PATH=$GRADLE_HOME/bin:$PATH
   - git clone -b stable https://github.com/flutter/flutter.git
+  - ./flutter/bin/flutter packages get
+  - ./flutter/bin/flutter precache
+  - yes | ./flutter/bin/flutter doctor --android-licenses # key row
   - wget https://dl.google.com/android/repository/android-ndk-r20-linux-x86_64.zip
   - unzip -qq android-ndk-r20-linux-x86_64.zip
   - export ANDROID_NDK_HOME=`pwd`/android-ndk-r20

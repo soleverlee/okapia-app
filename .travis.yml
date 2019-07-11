@@ -49,7 +49,7 @@ matrix:
     - os: osx
       language: generic
       osx_image: xcode11
-	  before_script:
+      before_script:
         - git clone -b stable https://github.com/flutter/flutter.git
         - ./flutter/bin/flutter packages get
         - ./flutter/bin/flutter precache
